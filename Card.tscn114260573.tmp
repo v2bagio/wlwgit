@@ -1,0 +1,22 @@
+[gd_scene load_steps=2 format=3 uid="uid://cpgjiqaofgl0a"]
+
+[ext_resource type="Script" uid="uid://bytbd8v0gfidk" path="res://Card.gd" id="1_kikvd"]
+
+[node name="Card" type="TextureRect"]
+offset_right = 100.0
+offset_bottom = 140.0
+script = ExtResource("1_kikvd")
+
+[node name="NomeLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 10.0
+offset_right = 50.0
+offset_bottom = 33.0
+
+[node name="PoderLabel" type="Label" parent="."]
+layout_mode = 0
+offset_left = 10.0
+offset_top = 100.0
+offset_right = 50.0
+offset_bottom = 123.0

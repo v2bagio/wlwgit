@@ -1,0 +1,10 @@
+[gd_scene format=3 uid="uid://bfh2watrpndav"]
+
+[node name="AlbumCard" type="TextureRect"]
+custom_minimum_size = Vector2(190, 280)
+offset_left = 24.0
+offset_top = 32.0
+offset_right = 214.0
+offset_bottom = 312.0
+expand_mode = 1
+stretch_mode = 6

@@ -1,0 +1,103 @@
+[gd_scene load_steps=5 format=3 uid="uid://cqcm60m8j4a7"]
+
+[ext_resource type="Script" uid="uid://bb3ps7uqr0se1" path="res://Card.gd" id="1_kikvd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dd2wi"]
+bg_color = Color(0.229591, 0.414974, 0.129227, 1)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hael8"]
+content_margin_left = 5.0
+content_margin_top = 5.0
+content_margin_right = 5.0
+content_margin_bottom = 5.0
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_21rx5"]
+bg_color = Color(0.796078, 0.164706, 0.164706, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Card" type="PanelContainer"]
+clip_contents = true
+offset_left = 2.0
+offset_top = 2.0
+offset_right = 182.0
+offset_bottom = 365.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_dd2wi")
+script = ExtResource("1_kikvd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="NomeLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="FotoFrame" type="PanelContainer" parent="VBoxContainer"]
+modulate = Color(0.237539, 0.237539, 0.237539, 1)
+clip_contents = true
+custom_minimum_size = Vector2(0, 90)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_hael8")
+
+[node name="FotoAnimal" type="TextureRect" parent="VBoxContainer/FotoFrame"]
+layout_mode = 2
+
+[node name="StatusDot" type="PanelContainer" parent="VBoxContainer/FotoFrame/FotoAnimal"]
+layout_mode = 2
+offset_left = 188.0
+offset_top = 4.0
+offset_right = 198.0
+offset_bottom = 14.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_21rx5")
+
+[node name="Control" type="Control" parent="VBoxContainer"]
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="PoderesGrid" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="Label" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="Label2" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="Label3" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="Label4" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="Label5" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="Label6" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="Label7" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="Label8" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2

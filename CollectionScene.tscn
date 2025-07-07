@@ -1,0 +1,55 @@
+[gd_scene load_steps=2 format=3 uid="uid://besqbng1t7vam"]
+
+[ext_resource type="Script" uid="uid://bh3jxshjy1qe3" path="res://CollectionScene.gd" id="1_vg3ct"]
+
+[node name="CollectionScene" type="Node2D"]
+script = ExtResource("1_vg3ct")
+
+[node name="ColorRect" type="ColorRect" parent="."]
+offset_right = 1152.0
+offset_bottom = 648.0
+color = Color(0.169245, 0.169245, 0.169245, 1)
+
+[node name="BackButton" type="Button" parent="."]
+offset_right = 55.0
+offset_bottom = 31.0
+text = "Voltar"
+
+[node name="ClearButton" type="Button" parent="."]
+offset_left = 920.0
+offset_top = 8.0
+offset_right = 1024.0
+offset_bottom = 39.0
+text = "Limpar cena"
+
+[node name="FilterBar" type="HBoxContainer" parent="."]
+offset_left = 72.0
+offset_right = 248.0
+offset_bottom = 40.0
+
+[node name="NameFilter" type="LineEdit" parent="FilterBar"]
+custom_minimum_size = Vector2(30, 0)
+layout_mode = 2
+placeholder_text = "Filtrar por nome"
+
+[node name="BiomeFilter" type="OptionButton" parent="FilterBar"]
+layout_mode = 2
+
+[node name="SortOrder" type="OptionButton" parent="FilterBar"]
+layout_mode = 2
+
+[node name="RarityStyleFilter" type="OptionButton" parent="FilterBar"]
+layout_mode = 2
+
+[node name="ScrollContainer" type="ScrollContainer" parent="."]
+clip_contents = false
+offset_left = 56.0
+offset_top = 64.0
+offset_right = 1056.0
+offset_bottom = 616.0
+
+[node name="CardGrid" type="GridContainer" parent="ScrollContainer"]
+custom_minimum_size = Vector2(1000, 552)
+layout_mode = 2
+mouse_force_pass_scroll_events = false
+columns = 5

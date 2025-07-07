@@ -1,0 +1,131 @@
+[gd_scene load_steps=5 format=3 uid="uid://brqyx5hy4t40c"]
+
+[ext_resource type="Script" uid="uid://dv6ac6sdalvce" path="res://CardViewer3D.gd" id="1_m70hi"]
+[ext_resource type="PackedScene" uid="uid://besqbng1t7vam" path="res://CollectionScene.tscn" id="2_m70hi"]
+
+[sub_resource type="BoxMesh" id="BoxMesh_gkhit"]
+resource_local_to_scene = true
+flip_faces = true
+size = Vector3(0.7, 1, 0.001)
+
+[sub_resource type="Environment" id="Environment_m70hi"]
+background_mode = 3
+
+[node name="CardViewer3D" type="Control"]
+top_level = true
+layout_mode = 3
+anchors_preset = 0
+script = ExtResource("1_m70hi")
+
+[node name="CollectionScene" parent="." instance=ExtResource("2_m70hi")]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+offset_right = 1696.0
+offset_bottom = 976.0
+mouse_filter = 0
+
+[node name="BackGroundDim" type="ColorRect" parent="TextureRect"]
+clip_contents = true
+custom_minimum_size = Vector2(1150, 648)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="."]
+z_index = 1
+layout_mode = 1
+anchors_preset = -1
+anchor_top = 0.012
+anchor_bottom = 0.012
+offset_left = -224.0
+offset_top = 16.224
+offset_right = 928.0
+offset_bottom = 916.224
+grow_horizontal = 2
+grow_vertical = 2
+mouse_target = true
+
+[node name="SubViewport" type="SubViewport" parent="ViewportContainer"]
+transparent_bg = true
+handle_input_locally = false
+msaa_3d = 2
+sdf_oversize = 0
+sdf_scale = 0
+size = Vector2i(1024, 600)
+render_target_update_mode = 4
+
+[node name="CardMesh" type="MeshInstance3D" parent="ViewportContainer/SubViewport"]
+rotation_order = 3
+mesh = SubResource("BoxMesh_gkhit")
+
+[node name="WorldEnvironment" type="WorldEnvironment" parent="ViewportContainer/SubViewport"]
+environment = SubResource("Environment_m70hi")
+
+[node name="Camera3D" type="Camera3D" parent="ViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.5)
+current = true
+fov = 50.0
+
+[node name="DirectionalLight3D" type="DirectionalLight3D" parent="ViewportContainer/SubViewport"]
+
+[node name="MarginContainer" type="PanelContainer" parent="."]
+z_index = 2
+custom_minimum_size = Vector2(400, 0)
+offset_left = 560.0
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_force_pass_scroll_events = false
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+z_index = 2
+layout_mode = 2
+mouse_filter = 0
+
+[node name="HSplitContainer" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(300, 10)
+layout_mode = 2
+horizontal_alignment = 1
+uppercase = true
+
+[node name="HSplitContainer2" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 50)
+layout_mode = 2
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(500, 150)
+layout_mode = 2
+size_flags_horizontal = 4
+autowrap_mode = 1
+
+[node name="HSplitContainer3" type="HSplitContainer" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="ArtistLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+custom_minimum_size = Vector2(100, 15)
+layout_direction = 2
+layout_mode = 2
+size_flags_horizontal = 4
+
+[node name="CloseButton" type="Button" parent="."]
+z_index = 3
+offset_left = 16.0
+offset_top = 16.0
+offset_right = 96.0
+offset_bottom = 64.0
+mouse_filter = 1
+text = "Fechar"
+
+[node name="CardFrontRenderer" type="SubViewport" parent="."]
+transparent_bg = true
+handle_input_locally = false
+size = Vector2i(190, 280)
+size_2d_override = Vector2i(190, 280)
+render_target_update_mode = 1

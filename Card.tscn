@@ -1,0 +1,245 @@
+[gd_scene load_steps=9 format=3 uid="uid://b2hxa3rtgf8ax"]
+
+[ext_resource type="Script" uid="uid://bb3ps7uqr0se1" path="res://Card.gd" id="1_o8dmi"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_wi8ie"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+expand_margin_left = 5.0
+expand_margin_top = 5.0
+expand_margin_right = 5.0
+expand_margin_bottom = 5.0
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_21rx5"]
+bg_color = Color(0.6, 0.6, 0.6, 0)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
+corner_radius_top_left = 3
+corner_radius_top_right = 3
+corner_radius_bottom_right = 3
+corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ekg7"]
+border_blend = true
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_hael8"]
+bg_color = Color(0.796078, 0.164706, 0.164706, 1)
+border_width_left = 1
+border_width_top = 1
+border_width_right = 1
+border_width_bottom = 1
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_dd2wi"]
+content_margin_left = 1.0
+content_margin_top = 1.0
+content_margin_right = 1.0
+content_margin_bottom = 1.0
+draw_center = false
+border_width_left = 5
+border_width_top = 5
+border_width_right = 5
+border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hael8"]
+load_path = "res://.godot/imported/card_back.png-0c0960486df04582101fdd48c0179ad0.ctex"
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ujke"]
+corner_radius_top_left = 8
+corner_radius_top_right = 8
+corner_radius_bottom_right = 8
+corner_radius_bottom_left = 8
+
+[node name="Card" type="Control"]
+clip_contents = true
+custom_minimum_size = Vector2(1, 1)
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = -872.0
+offset_bottom = -268.0
+grow_horizontal = 2
+grow_vertical = 2
+size_flags_horizontal = 3
+size_flags_vertical = 3
+mouse_filter = 1
+script = ExtResource("1_o8dmi")
+
+[node name="CardBackground" type="TextureRect" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FullArtBackground" type="TextureRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="FullArtBorder" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 8.0
+offset_top = 8.0
+offset_right = -8.0
+offset_bottom = -8.0
+grow_horizontal = 2
+grow_vertical = 2
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_wi8ie")
+
+[node name="CardBorder" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(180, 280)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_21rx5")
+
+[node name="CardFace" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 4.0
+offset_top = 2.0
+offset_right = -4.0
+offset_bottom = -4.0
+grow_horizontal = 2
+grow_vertical = 2
+theme_override_constants/separation = 1
+alignment = 1
+
+[node name="Controldown3" type="Control" parent="CardFace"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 10)
+layout_mode = 2
+
+[node name="NomeLabel" type="Label" parent="CardFace"]
+layout_mode = 2
+size_flags_vertical = 2
+horizontal_alignment = 1
+
+[node name="Controldown4" type="Control" parent="CardFace"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 5)
+layout_mode = 2
+
+[node name="FotoFrame" type="PanelContainer" parent="CardFace"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_8ekg7")
+
+[node name="FotoAnimal" type="TextureRect" parent="CardFace/FotoFrame"]
+clip_contents = true
+layout_mode = 2
+size_flags_stretch_ratio = 0.0
+expand_mode = 2
+stretch_mode = 6
+
+[node name="StatusDot" type="PanelContainer" parent="CardFace/FotoFrame/FotoAnimal"]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -18.0
+offset_top = 6.0
+offset_right = -8.0
+offset_bottom = 16.0
+grow_horizontal = 0
+theme_override_styles/panel = SubResource("StyleBoxFlat_hael8")
+
+[node name="FotoFrame" type="PanelContainer" parent="CardFace/FotoFrame"]
+clip_contents = true
+custom_minimum_size = Vector2(170, 100)
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_dd2wi")
+
+[node name="Controldown2" type="Control" parent="CardFace"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="PoderesBox" type="VBoxContainer" parent="CardFace"]
+layout_mode = 2
+
+[node name="LabelA" type="Label" parent="CardFace/PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="LabelC" type="Label" parent="CardFace/PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="LabelP" type="Label" parent="CardFace/PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="LabelV" type="Label" parent="CardFace/PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="Controldown" type="Control" parent="CardFace"]
+clip_contents = true
+custom_minimum_size = Vector2(0, 20)
+layout_mode = 2
+
+[node name="HollowEffect" type="ColorRect" parent="."]
+modulate = Color(1, 1, 1, 0)
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CardBack" type="TextureRect" parent="."]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = SubResource("CompressedTexture2D_hael8")
+expand_mode = 1
+
+[node name="RarityGem" type="PanelContainer" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -20.0
+offset_top = 5.0
+offset_right = -5.0
+offset_bottom = 20.0
+grow_horizontal = 0
+mouse_filter = 1
+theme_override_styles/panel = SubResource("StyleBoxFlat_3ujke")

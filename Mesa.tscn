@@ -1,0 +1,20 @@
+[gd_scene load_steps=3 format=3 uid="uid://cchy8xfdhihuo"]
+
+[ext_resource type="Script" uid="uid://b6kpxyl736fof" path="res://Mesa.gd" id="1_7r4hx"]
+[ext_resource type="Script" uid="uid://bw4saxxj7kuq0" path="res://Baralho.gd" id="2_52uii"]
+
+[node name="Node2D" type="Node2D"]
+
+[node name="Mesa" type="Node2D" parent="."]
+script = ExtResource("1_7r4hx")
+
+[node name="Baralho" type="Node2D" parent="Mesa"]
+position = Vector2(20, 0)
+script = ExtResource("2_52uii")
+
+[node name="MaoDoJogador" type="HBoxContainer" parent="Mesa"]
+offset_left = 20.0
+offset_top = 18.0
+offset_right = 60.0
+offset_bottom = 58.0
+metadata/_edit_use_anchors_ = true

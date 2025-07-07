@@ -1,0 +1,44 @@
+{
+	"capivara": {
+		"nome_display": "Capivara", "iucn_status": "LC",
+		"bioma": ["Pantanoso", "Amazônia"],
+			{"path": "res://assets/normal/capivara.jpg", "artist": "Artista A", "is_alt": false},
+			{"path": "res://assets/normal/capivara_v2.jpg", "artist": "Artista B", "is_alt": false}
+		],
+		"population": 20000,
+		"altura":      { "min": 0.5, "max": 0.65, "unidade": "m", "archetype": "HIGH" },
+		"comprimento": { "min": 1.0, "max": 1.4,  "unidade": "m", "archetype": "HIGH" },
+		"velocidade":  { "min": 30.0,"max": 40.0, "unidade": "km/h", "archetype": "HIGH" },
+		"peso":        { "min": 75.0,"max": 95.0, "unidade": "kg", "archetype": "HIGH" }
+	},
+	"onca_pintada": {
+		"nome_display": "Onça-Pintada", "iucn_status": "NT",
+		"bioma": ["Floresta", "Cerrado", "Mata Atlântica"],
+		"descricao": "O maior felino das Américas, a onça-pintada é um predador de topo com uma mordida poderosa. As suas manchas, chamadas rosetas, são únicas para cada indivíduo.",
+		"population": 20000,
+		"altura":      { "min": 0.8, "max": 0.95, "unidade": "m", "archetype": "HIGH" },
+		"comprimento": { "min": 1.5, "max": 1.9, "unidade": "m", "archetype": "HIGH" },
+		"velocidade":  { "min": 70.0, "max": 85.0, "unidade": "km/h", "archetype": "HIGH" },
+		"peso":        { "min": 90.0, "max": 110.0, "unidade": "kg", "archetype": "HIGH" }
+	},
+	"mico_leao_dourado": {
+		"nome_display": "Mico-Leão-Dourado", "iucn_status": "EN",
+		"bioma": ["Mata Atlântica"],
+		"descricao": "Endêmico da Mata Atlântica brasileira, este pequeno primata é um símbolo da luta pela conservação de espécies ameaçadas.",
+		"population": 20000,
+		"altura":      { "min": 0.25,"max": 0.35, "unidade": "m", "archetype": "LOW" },
+		"comprimento": { "min": 0.15,"max": 0.25, "unidade": "m", "archetype": "LOW" },
+		"velocidade":  { "min": 35.0,"max": 45.0, "unidade": "km/h", "archetype": "HIGH" },
+		"peso":        { "min": 0.4, "max": 0.6,  "unidade": "kg", "archetype": "LOW" }
+	},
+	"tucano": {
+		"nome_display": "Tucano-Toco", "iucn_status": "LC",
+		"bioma": ["Floresta", "Cerrado"],
+		"descricao": "Conhecido pelo seu enorme e colorido bico, o tucano-toco utiliza-o para alcançar frutos e regular a temperatura corporal.",
+		"population": 20000,
+		"altura":      { "min": 0.45, "max": 0.55, "unidade": "m", "archetype": "HIGH" },
+		"comprimento": { "min": 0.5, "max": 0.65, "unidade": "m", "archetype": "HIGH" },
+		"velocidade":  { "min": 45.0, "max": 55.0, "unidade": "km/h", "archetype": "HIGH" },
+		"peso":        { "min": 0.5, "max": 0.8, "unidade": "kg", "archetype": "LOW" }
+	}
+}

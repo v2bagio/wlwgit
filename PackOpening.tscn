@@ -1,0 +1,120 @@
+[gd_scene load_steps=2 format=3 uid="uid://dvikflbg4fy34"]
+
+[ext_resource type="Script" uid="uid://bnv7gua8k86lp" path="res://PackOpening.gd" id="1_cvw7c"]
+
+[node name="PackOpeningScene" type="Control"]
+layout_mode = 3
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -142.5
+offset_top = -192.5
+offset_right = 142.5
+offset_bottom = 192.5
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1_cvw7c")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.167
+anchor_top = 0.136
+anchor_right = 0.833
+anchor_bottom = 0.884
+offset_left = -0.0950012
+offset_top = 0.139996
+offset_right = 0.094986
+offset_bottom = 2.15997
+grow_horizontal = 2
+grow_vertical = 2
+pivot_offset = Vector2(-273.5, -35.5)
+color = Color(0.0295066, 0.0295066, 0.0295066, 1)
+
+[node name="CardDisplayArea" type="HBoxContainer" parent="."]
+custom_minimum_size = Vector2(1500, 500)
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -750.0
+offset_top = -250.0
+offset_right = 750.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="OpenCommonPackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.314
+anchor_top = 0.042
+anchor_right = -0.314
+anchor_bottom = 0.042
+offset_left = -72.01
+offset_top = -15.67
+offset_right = 79.99
+offset_bottom = 15.33
+text = "Pacote Comum"
+
+[node name="OpenPremiumPackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 0.5
+anchor_top = 0.042
+anchor_right = 0.5
+anchor_bottom = 0.042
+offset_left = -80.0
+offset_top = -15.67
+offset_right = 69.0
+offset_bottom = 15.33
+grow_horizontal = 2
+text = "Pacote Premium"
+
+[node name="OpenFoundersPackButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = 1.277
+anchor_top = 0.042
+anchor_right = 1.277
+anchor_bottom = 0.042
+offset_left = -74.445
+offset_top = -15.67
+offset_right = 74.555
+offset_bottom = 15.33
+grow_horizontal = 2
+text = "Pacote Fundador"
+
+[node name="ViewCollectionButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 7
+anchor_left = 0.5
+anchor_top = 1.0
+anchor_right = 0.5
+anchor_bottom = 1.0
+offset_left = -49.5
+offset_top = -31.0
+offset_right = 47.5
+grow_horizontal = 2
+grow_vertical = 0
+text = "Ver coleção"
+
+[node name="RenderStudio" type="SubViewportContainer" parent="."]
+layout_mode = 1
+anchors_preset = -1
+anchor_left = -0.819
+anchor_top = -0.113
+anchor_right = -0.819
+anchor_bottom = -0.113
+offset_left = -1168.08
+offset_top = -695.995
+offset_right = -656.085
+offset_bottom = -183.995
+
+[node name="SubViewport" type="SubViewport" parent="RenderStudio"]
+handle_input_locally = false
+render_target_update_mode = 4

@@ -1,0 +1,56 @@
+[gd_scene load_steps=3 format=3 uid="uid://b41hif353fuxb"]
+
+[ext_resource type="Script" uid="uid://cci3gsmcfkio1" path="res://Card.gd" id="1_kikvd"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_u4fkt"]
+bg_color = Color(0, 0.417195, 0.181717, 1)
+border_width_left = 4
+border_width_top = 4
+border_width_right = 4
+border_width_bottom = 4
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
+
+[node name="Card" type="PanelContainer"]
+offset_right = 170.0
+offset_bottom = 243.0
+theme_override_styles/panel = SubResource("StyleBoxFlat_u4fkt")
+script = ExtResource("1_kikvd")
+
+[node name="VBoxContainer" type="VBoxContainer" parent="."]
+layout_mode = 2
+
+[node name="FotoAnimal" type="TextureRect" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="NomeLabel" type="Label" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="PoderesGrid" type="GridContainer" parent="VBoxContainer"]
+layout_mode = 2
+
+[node name="AlturaTitulo" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="AlturaValor" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="PesoTitulo" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="PesoValor" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="ComprimentoTitulo" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="ComprimentoValor" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="VelocidadeTitulo" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
+
+[node name="VelocidadeValor" type="Label" parent="VBoxContainer/PoderesGrid"]
+layout_mode = 2
