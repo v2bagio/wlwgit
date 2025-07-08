@@ -1,7 +1,6 @@
-[gd_scene load_steps=5 format=3 uid="uid://brqyx5hy4t40c"]
+[gd_scene load_steps=4 format=3 uid="uid://brqyx5hy4t40c"]
 
 [ext_resource type="Script" uid="uid://dv6ac6sdalvce" path="res://CardViewer3D.gd" id="1_m70hi"]
-[ext_resource type="PackedScene" uid="uid://besqbng1t7vam" path="res://CollectionScene.tscn" id="2_m70hi"]
 
 [sub_resource type="BoxMesh" id="BoxMesh_gkhit"]
 resource_local_to_scene = true
@@ -16,8 +15,6 @@ top_level = true
 layout_mode = 3
 anchors_preset = 0
 script = ExtResource("1_m70hi")
-
-[node name="CollectionScene" parent="." instance=ExtResource("2_m70hi")]
 
 [node name="TextureRect" type="TextureRect" parent="."]
 layout_mode = 0

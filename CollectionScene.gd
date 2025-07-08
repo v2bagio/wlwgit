@@ -14,6 +14,7 @@ const HOVER_ZOOM_FACTOR = 1.05
 @onready var sort_order = $FilterBar/SortOrder
 @onready var clear_button = $ClearButton
 @onready var scroll_container = $ScrollContainer
+@onready var collection_scene = self
 
 var CardViewerScene = preload("res://CardViewer3D.tscn")
 var all_cards = []
@@ -45,6 +46,11 @@ func _on_card_inspected(card_data: Dictionary):
 	if find_child("CardViewer3D", true, false):
 		print("Visualizador já está aberto.")
 		return
+	
+	# Oculta a carta que foi clicada
+	if is_instance_valid(hovered_card):
+		hovered_card.visible = false
+	
 	var viewer = CardViewerScene.instantiate()
 	viewer.viewer_opened.connect(_on_viewer_opened)
 	add_child(viewer)
@@ -55,14 +61,10 @@ func _on_card_inspected(card_data: Dictionary):
 	viewer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
 	
 func _on_viewer_opened():
-	print("Visualizador aberto - CollectionScene oculta")
-	# Garantir que a CollectionScene está oculta
-	self.visible = false
-	
-	# Desabilitar processamento para melhor desempenho
-	self.set_process(false)
-	self.set_physics_process(false)
-	self.set_process_input(false)
+	# Hide and disable the entire grid
+	$ScrollContainer/CardGrid.visible = false
+	$ScrollContainer/CardGrid.process_mode = Node.PROCESS_MODE_DISABLED
+	process_mode = Node.PROCESS_MODE_DISABLED
 
 func _input(event):
 	# Processar eventos de mouse
@@ -70,10 +72,14 @@ func _input(event):
 		_handle_card_click()
 
 func _process(_delta):
+	# Não processar hover se a cena estiver invisível/desativada
+	if not visible or process_mode == Node.PROCESS_MODE_DISABLED:
+		return
+	
+	# Restante do seu código de hover...
 	var mouse_pos = get_global_mouse_position()
 	var new_hovered_card: Card = null
 	
-	# Procurar por cartas sob o cursor
 	for node in card_grid.get_children():
 		if node is Card and node.visible:
 			var rect = node.get_global_rect()
@@ -81,7 +87,6 @@ func _process(_delta):
 				new_hovered_card = node
 				break
 	
-	# Atualizar estado de hover
 	if new_hovered_card != hovered_card:
 		if is_instance_valid(hovered_card):
 			hovered_card._hover_effect(false, HOVER_ZOOM_FACTOR)
@@ -90,7 +95,7 @@ func _process(_delta):
 			new_hovered_card._hover_effect(true, HOVER_ZOOM_FACTOR)
 		
 		hovered_card = new_hovered_card
-
+		
 func _handle_card_click():
 	if is_instance_valid(hovered_card):
 		print("Carta clicada: ", hovered_card.animal_id)
@@ -100,15 +105,18 @@ func _handle_card_click():
 func _open_card_viewer(card_data: Dictionary):
 	print("Abrindo visualizador para: ", card_data.get("nome_display", "Desconhecido"))
 	
-	# Fechar visualizador existente
 	var existing_viewer = find_child("CardViewer3D", true, false)
 	if existing_viewer:
 		existing_viewer.queue_free()
 	
-	# Criar novo visualizador
+	# Oculta o INFERNO da carta que fica na frente de tudo -- Não remover --
+	if is_instance_valid(hovered_card):
+		hovered_card.visible = false
+	
 	var viewer = CardViewerScene.instantiate()
 	viewer.name = "CardViewer3D"
 	viewer.card_data = card_data
+	viewer.tree_exiting.connect(_on_viewer_closed)
 	add_child(viewer)
 	
 	print("Visualizador criado com sucesso!")
@@ -127,6 +135,10 @@ func _on_viewer_closed():
 	print("Visualizador fechado - CollectionScene restaurada")
 	# Mostrar a CollectionScene novamente
 	visible = true
+	
+	# Restaurar visibilidade da carta que foi ocultada
+	if is_instance_valid(hovered_card):
+		hovered_card.visible = true
 	
 	# Reativar processamento
 	set_process(true)

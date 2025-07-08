@@ -325,6 +325,9 @@ func _on_mouse_exited():
 		_hover_effect(false, 1.05)
 
 func _hover_effect(is_hovered: bool, zoom_factor: float):
+	# Verifica se o visualizador está aberto (via singleton Global)
+	if Global.viewer_opened:
+		return
 	var target_scale = Vector2.ONE
 	if is_hovered:
 		target_scale = Vector2(zoom_factor, zoom_factor)

@@ -11,7 +11,7 @@ config_version=5
 [application]
 
 config/name="WLW"
-run/main_scene="uid://cchy8xfdhihuo"
+run/main_scene="uid://besqbng1t7vam"
 config/features=PackedStringArray("4.4", "Forward Plus")
 config/icon="res://icon.svg"
 

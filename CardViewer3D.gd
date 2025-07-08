@@ -12,7 +12,6 @@ signal viewer_closed
 @onready var artist_label = $MarginContainer/VBoxContainer/ArtistLabel
 @onready var close_button = $CloseButton
 @onready var card_front_renderer = $CardFrontRenderer
-@onready var CollectionScene = $CollectionScene
 
 const CardScene = preload("res://Card.tscn")
 const ZOOM_SENSITIVITY = 0.2
@@ -28,12 +27,14 @@ var card_data: Dictionary = {}
 var front_texture: Texture2D
 
 func _ready():
-	get_child(CollectionScene)
-	if CollectionScene:
-		print("encontrei")
-	CollectionScene.visible = false
-	print("CardViewer3D pronto")
-	Global.hover_habilitado = false
+	# Freeze the game and hide all cards
+	get_tree().paused = true
+	for card in get_tree().get_nodes_in_group("cards"):
+		card.visible = false
+		card.process_mode = Node.PROCESS_MODE_DISABLED
+	
+	# Rest of your initialization...
+	Global.viewer_opened = true
 	top_level = true
 	process_mode = Node.PROCESS_MODE_ALWAYS
 	_configure_lighting()
@@ -230,7 +231,13 @@ func _handle_card_input(event):
 	get_viewport().set_input_as_handled()
 
 func _on_close_pressed():
-	emit_signal("viewer_closed")  # Emitir sinal antes de fechar
+	# Unfreeze and restore cards
+	get_tree().paused = false
+	for card in get_tree().get_nodes_in_group("cards"):
+		card.visible = true
+		card.process_mode = Node.PROCESS_MODE_INHERIT
+	
+	Global.viewer_opened = false
 	queue_free()
 
 func _on_bg_gui_input(event):
