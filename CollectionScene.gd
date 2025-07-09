@@ -17,6 +17,7 @@ const HOVER_ZOOM_FACTOR = 1.05
 @onready var collection_scene = self
 
 var CardViewerScene = preload("res://CardViewer3D.tscn")
+var mainmenu = preload("res://Menu.tscn")
 var all_cards = []
 var currently_hovered_card: Card = null
 var hovered_card: Card = null
@@ -239,7 +240,7 @@ func _get_filtered_and_sorted_cards() -> Array:
 	return filtered_cards
 	
 func _on_back_button_pressed():
-	get_tree().change_scene_to_file("res://PackOpening.tscn")
+	get_tree().change_scene_to_file("res://Menu.tscn")
 
 func _on_clear_button_pressed():
 	PlayerCollection.clear_collection()

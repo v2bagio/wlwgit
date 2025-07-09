@@ -4,12 +4,14 @@ extends Control
 const CardScene = preload("res://Card.tscn")
 const HOLLOW_CHANCE = 0.1 # 10% de chance
 
+@onready var mainmenu = preload("res://Menu.tscn")
 @onready var open_common_pack_button = $OpenCommonPackButton
 @onready var open_premium_pack_button = $OpenPremiumPackButton
 @onready var open_founders_pack_button = $OpenFoundersPackButton
 @onready var card_display_area = $CardDisplayArea
 @onready var view_collection_button = $ViewCollectionButton
 @onready var background = $Background
+@onready var mainmenubutton = $mainmenubutton
 
 func _ready():
 	Global.hover_habilitado = false
@@ -17,6 +19,7 @@ func _ready():
 	open_premium_pack_button.pressed.connect(func(): _open_pack("premium"))
 	open_founders_pack_button.pressed.connect(func(): _open_pack("founder"))
 	view_collection_button.pressed.connect(_on_view_collection_button_pressed)
+	mainmenubutton.pressed.connect(_on_mainmenubutton_pressed)
 	card_display_area.alignment = HBoxContainer.ALIGNMENT_CENTER
 	card_display_area.add_theme_constant_override("separation", 20)
 
@@ -115,3 +118,6 @@ func _open_pack(pack_type: String):
 		
 func _on_view_collection_button_pressed():
 	get_tree().change_scene_to_file("res://CollectionScene.tscn")
+
+func _on_mainmenubutton_pressed():
+	get_tree().change_scene_to_file("res://Menu.tscn")

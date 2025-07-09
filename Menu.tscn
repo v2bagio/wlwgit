@@ -1,0 +1,145 @@
+[gd_scene load_steps=8 format=3 uid="uid://rd2guf4uoc42"]
+
+[ext_resource type="Script" uid="uid://cq5wqq6dd73af" path="res://Menu.gd" id="1_uubjt"]
+[ext_resource type="Texture2D" uid="uid://cpa8n7yk5oq35" path="res://assets/backgrounds/pampa.png" id="2_ylpcl"]
+[ext_resource type="Texture2D" uid="uid://868omtrvxynv" path="res://assets/backgrounds/cerrado.png" id="3_cx167"]
+
+[sub_resource type="SystemFont" id="SystemFont_lthh4"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lthh4"]
+
+[sub_resource type="SystemFont" id="SystemFont_uubjt"]
+font_names = PackedStringArray("Impact")
+
+[sub_resource type="SystemFont" id="SystemFont_5yleq"]
+font_names = PackedStringArray("Impact")
+
+[node name="Menu" type="Node2D"]
+script = ExtResource("1_uubjt")
+
+[node name="Background2" type="TextureRect" parent="."]
+offset_left = -480.0
+offset_top = -248.0
+offset_right = 1440.0
+offset_bottom = 832.0
+texture = ExtResource("2_ylpcl")
+
+[node name="Background" type="TextureRect" parent="."]
+visible = false
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+texture = ExtResource("3_cx167")
+expand_mode = 2
+
+[node name="ColorRect" type="ColorRect" parent="Background"]
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Logo" type="TextureRect" parent="."]
+offset_left = 37.0
+offset_top = 14.0
+offset_right = 127.0
+offset_bottom = 96.0
+
+[node name="MenuBar" type="MenuBar" parent="."]
+offset_left = 1.0
+offset_top = 40.0
+offset_right = 696.0
+offset_bottom = 448.0
+
+[node name="PlayerCollection" type="Button" parent="MenuBar"]
+layout_mode = 0
+offset_left = 23.0
+offset_top = 128.0
+offset_right = 167.0
+offset_bottom = 161.0
+pivot_offset = Vector2(-23, -96)
+theme_override_fonts/font = SubResource("SystemFont_lthh4")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
+text = "Minha coleção"
+
+[node name="Play" type="Button" parent="MenuBar"]
+offset_left = 23.0
+offset_top = 192.0
+offset_right = 167.0
+offset_bottom = 225.0
+theme_override_fonts/font = SubResource("SystemFont_uubjt")
+theme_override_font_sizes/font_size = 19
+text = "Jogar"
+
+[node name="Marketplace" type="Button" parent="MenuBar"]
+offset_left = 23.0
+offset_top = 256.0
+offset_right = 167.0
+offset_bottom = 289.0
+theme_override_fonts/font = SubResource("SystemFont_5yleq")
+theme_override_font_sizes/font_size = 19
+text = "Marketplace"
+
+[node name="ConfigMenu" type="Button" parent="MenuBar"]
+offset_left = 991.0
+offset_top = 8.0
+offset_right = 1135.0
+offset_bottom = 41.0
+theme_override_fonts/font = SubResource("SystemFont_5yleq")
+theme_override_font_sizes/font_size = 19
+text = "Configurações"
+
+[node name="Novidades" type="Button" parent="MenuBar"]
+offset_left = 207.0
+offset_top = 8.0
+offset_right = 327.0
+offset_bottom = 41.0
+theme_override_fonts/font = SubResource("SystemFont_5yleq")
+theme_override_font_sizes/font_size = 19
+text = "Novidades"
+
+[node name="AllCollections" type="Button" parent="MenuBar"]
+offset_left = 855.0
+offset_top = 8.0
+offset_right = 983.0
+offset_bottom = 41.0
+theme_override_fonts/font = SubResource("SystemFont_5yleq")
+theme_override_font_sizes/font_size = 18
+text = "Coleções"
+
+[node name="PackStore" type="Button" parent="MenuBar"]
+offset_left = 351.0
+offset_top = 8.0
+offset_right = 511.0
+offset_bottom = 41.0
+theme_override_fonts/font = SubResource("SystemFont_5yleq")
+theme_override_font_sizes/font_size = 19
+text = "Comprar pacotes"
+
+[node name="Fechar" type="Button" parent="."]
+offset_left = 1136.0
+offset_right = 1149.0
+offset_bottom = 20.0
+theme_override_fonts/font = SubResource("SystemFont_5yleq")
+theme_override_font_sizes/font_size = 9
+text = "X"
+
+[node name="TextEdit" type="TextEdit" parent="."]
+offset_left = 208.0
+offset_top = 144.0
+offset_right = 776.0
+offset_bottom = 440.0
+text = "Release versão Alfa 0.02
+
+- Adicionados 2 novos modelos de carta;
+- Ultrapassamos a marca de R$ 0,57 doados para projetos de conservação
+- Coleção \"Animais do Pampa\" agora disponível para compra;
+- Correção de bugs;
+- Mais (...)"
+editable = false
+wrap_mode = 1
