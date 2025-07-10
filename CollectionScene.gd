@@ -38,11 +38,100 @@ func _ready():
 	all_cards = PlayerCollection.get_collection()
 	card_grid.gui_input.connect(_input)
 	
-	
 	_populate_filter_buttons()
 	_update_display()
 	set_process_input(true)
 	
+func _populate_filter_buttons():
+	biome_filter.add_item("Todos os Biomas", 0)
+	var biomas_unicos = []
+	for card_data in all_cards:
+		if card_data.has("bioma") and not card_data["bioma"] in biomas_unicos:
+			biomas_unicos.append(card_data["bioma"])
+	for bioma in biomas_unicos:
+		biome_filter.add_item(bioma)
+	
+	rarity_style_filter.add_item("Todas as Raridades", 0)
+	rarity_style_filter.add_item("Comum", 1)
+	rarity_style_filter.add_item("Incomum", 2)
+	rarity_style_filter.add_item("Rara", 3)
+	rarity_style_filter.add_item("Lendária", 4)
+	rarity_style_filter.add_separator("Anomalias")
+	rarity_style_filter.add_item("Anomalia Incomum", 5)
+	rarity_style_filter.add_item("Anomalia Rara", 6)
+	rarity_style_filter.add_item("Anomalia Lendária", 7)
+	rarity_style_filter.add_separator("Estilos")
+	rarity_style_filter.add_item("Apenas Full Art", 8)
+	rarity_style_filter.add_item("Apenas Hollow", 9)
+	
+	sort_order.add_item("Padrão", 0)
+	sort_order.add_item("Peso (Maior para Menor)", 1)
+	sort_order.add_item("Peso (Menor para Maior)", 2)
+	sort_order.add_item("Altura (Maior para Menor)", 3)
+	sort_order.add_item("Altura (Menor para Maior)", 4)
+	sort_order.add_item("Comprimento (Maior para Menor)", 5)
+	sort_order.add_item("Comprimento (Menor para Maior)", 6)
+	sort_order.add_item("Velocidade (Maior para Menor)", 7)
+	sort_order.add_item("Velocidade (Menor para Maior)", 8)
+
+func _on_filters_changed(_value = 0):
+	_update_display()
+
+func _update_display():
+	for child in card_grid.get_children():
+		child.queue_free()
+	
+	var filtered_cards = _get_filtered_and_sorted_cards()
+	
+	for card_data in filtered_cards:
+		var new_card = CardScene.instantiate() as Card
+		card_grid.add_child(new_card)
+		new_card.display_card_data(card_data)
+		new_card.enable_flip(false)  # Desabilita flip na coleção
+		new_card.is_face_up = true   # Mostra sempre a frente
+		new_card.update_visibility() # Atualiza visualização
+
+func _get_filtered_and_sorted_cards() -> Array:
+	var filtered_cards = []
+	var nome_filtro = name_filter.text.to_lower()
+	var bioma_filtro = biome_filter.get_item_text(biome_filter.selected)
+	var rarity_style_filtro_id = rarity_style_filter.get_item_id(rarity_style_filter.selected)
+
+	for card_data in all_cards:
+		var passa_nome = nome_filtro.is_empty() or (card_data.has("nome_display") and card_data["nome_display"].to_lower().contains(nome_filtro))
+		var passa_bioma = biome_filter.selected == 0 or (card_data.has("bioma") and card_data["bioma"] == bioma_filtro)
+		
+		var passa_raridade_estilo = false
+		if rarity_style_filtro_id <= 7:
+			var rarity_text = rarity_style_filter.get_item_text(rarity_style_filter.selected)
+			passa_raridade_estilo = rarity_style_filtro_id == 0 or (card_data.has("raridade") and card_data["raridade"] == rarity_text)
+		elif rarity_style_filtro_id == 8:
+			passa_raridade_estilo = card_data.get("is_full_art", false)
+		elif rarity_style_filtro_id == 9:
+			passa_raridade_estilo = card_data.get("is_hollow", false)
+		
+		if passa_nome and passa_bioma and passa_raridade_estilo:
+			filtered_cards.append(card_data)
+			
+	var sort_idx = sort_order.selected
+	if sort_idx > 0:
+		var sort_key = ""
+		match sort_idx:
+			1, 2: sort_key = "peso"
+			3, 4: sort_key = "altura"
+			5, 6: sort_key = "comprimento"
+			7, 8: sort_key = "velocidade"
+		
+		var is_descending = sort_idx % 2 != 0
+		filtered_cards.sort_custom(func(a, b):
+			if is_descending:
+				return a.get(sort_key, 0) > b.get(sort_key, 0)
+			else:
+				return a.get(sort_key, 0) < b.get(sort_key, 0)
+		)
+		
+	return filtered_cards
+
 func _on_card_inspected(card_data: Dictionary):
 	if find_child("CardViewer3D", true, false):
 		print("Visualizador já está aberto.")
@@ -149,96 +238,6 @@ func _on_viewer_closed():
 	# Atualizar a exibição se necessário
 	_update_display()
 
-func _populate_filter_buttons():
-	biome_filter.add_item("Todos os Biomas", 0)
-	var biomas_unicos = []
-	for card_data in all_cards:
-		if card_data.has("bioma") and not card_data["bioma"] in biomas_unicos:
-			biomas_unicos.append(card_data["bioma"])
-	for bioma in biomas_unicos:
-		biome_filter.add_item(bioma)
-	
-	rarity_style_filter.add_item("Todas as Raridades", 0)
-	rarity_style_filter.add_item("Comum", 1)
-	rarity_style_filter.add_item("Incomum", 2)
-	rarity_style_filter.add_item("Rara", 3)
-	rarity_style_filter.add_item("Lendária", 4)
-	rarity_style_filter.add_separator("Anomalias")
-	rarity_style_filter.add_item("Anomalia Incomum", 5)
-	rarity_style_filter.add_item("Anomalia Rara", 6)
-	rarity_style_filter.add_item("Anomalia Lendária", 7)
-	rarity_style_filter.add_separator("Estilos")
-	rarity_style_filter.add_item("Apenas Full Art", 8)
-	rarity_style_filter.add_item("Apenas Hollow", 9)
-	
-	sort_order.add_item("Padrão", 0)
-	sort_order.add_item("Peso (Maior para Menor)", 1)
-	sort_order.add_item("Peso (Menor para Maior)", 2)
-	sort_order.add_item("Altura (Maior para Menor)", 3)
-	sort_order.add_item("Altura (Menor para Maior)", 4)
-	sort_order.add_item("Comprimento (Maior para Menor)", 5)
-	sort_order.add_item("Comprimento (Menor para Maior)", 6)
-	sort_order.add_item("Velocidade (Maior para Menor)", 7)
-	sort_order.add_item("Velocidade (Menor para Maior)", 8)
-
-func _on_filters_changed(_value = 0):
-	_update_display()
-
-func _update_display():
-	for child in card_grid.get_children():
-		child.queue_free()
-	
-	var filtered_cards = _get_filtered_and_sorted_cards()
-	
-	for card_data in filtered_cards:
-		var new_card = CardScene.instantiate() as Card
-		card_grid.add_child(new_card)
-		new_card.display_card_data(card_data)
-		new_card.enable_flip(false)  # Desabilita flip na coleção
-		new_card.is_face_up = true   # Mostra sempre a frente
-		new_card.update_visibility() # Atualiza visualização
-
-func _get_filtered_and_sorted_cards() -> Array:
-	var filtered_cards = []
-	var nome_filtro = name_filter.text.to_lower()
-	var bioma_filtro = biome_filter.get_item_text(biome_filter.selected)
-	var rarity_style_filtro_id = rarity_style_filter.get_item_id(rarity_style_filter.selected)
-
-	for card_data in all_cards:
-		var passa_nome = nome_filtro.is_empty() or (card_data.has("nome_display") and card_data["nome_display"].to_lower().contains(nome_filtro))
-		var passa_bioma = biome_filter.selected == 0 or (card_data.has("bioma") and card_data["bioma"] == bioma_filtro)
-		
-		var passa_raridade_estilo = false
-		if rarity_style_filtro_id <= 7:
-			var rarity_text = rarity_style_filter.get_item_text(rarity_style_filter.selected)
-			passa_raridade_estilo = rarity_style_filtro_id == 0 or (card_data.has("raridade") and card_data["raridade"] == rarity_text)
-		elif rarity_style_filtro_id == 8:
-			passa_raridade_estilo = card_data.get("is_full_art", false)
-		elif rarity_style_filtro_id == 9:
-			passa_raridade_estilo = card_data.get("is_hollow", false)
-		
-		if passa_nome and passa_bioma and passa_raridade_estilo:
-			filtered_cards.append(card_data)
-			
-	var sort_idx = sort_order.selected
-	if sort_idx > 0:
-		var sort_key = ""
-		match sort_idx:
-			1, 2: sort_key = "peso"
-			3, 4: sort_key = "altura"
-			5, 6: sort_key = "comprimento"
-			7, 8: sort_key = "velocidade"
-		
-		var is_descending = sort_idx % 2 != 0
-		filtered_cards.sort_custom(func(a, b):
-			if is_descending:
-				return a.get(sort_key, 0) > b.get(sort_key, 0)
-			else:
-				return a.get(sort_key, 0) < b.get(sort_key, 0)
-		)
-		
-	return filtered_cards
-	
 func _on_back_button_pressed():
 	get_tree().change_scene_to_file("res://Menu.tscn")
 

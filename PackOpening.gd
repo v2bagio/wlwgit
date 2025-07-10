@@ -34,6 +34,7 @@ func _open_pack(pack_type: String):
 	ui_fade_tween.parallel().tween_property(open_premium_pack_button, "modulate:a", 0.0, 0.5)
 	ui_fade_tween.parallel().tween_property(open_founders_pack_button, "modulate:a", 0.0, 0.5)
 	ui_fade_tween.parallel().tween_property(view_collection_button, "modulate:a", 0.0, 0.5)
+	ui_fade_tween.parallel().tween_property(mainmenubutton, "modulate:a", 0.0, 0.5)
 	
 	for child in card_display_area.get_children():
 		child.queue_free()
@@ -107,7 +108,9 @@ func _open_pack(pack_type: String):
 		open_premium_pack_button.modulate.a = 1.0
 		open_founders_pack_button.modulate.a = 1.0
 		view_collection_button.modulate.a = 1.0
+		mainmenubutton.modulate.a = 1.0
 	)
+	
 	var available_alt_art_animals = ArtManager.get_all_alt_art_animals()
 	if available_alt_art_animals.is_empty():
 		# Se não há arte alternativa, converter para arte normal

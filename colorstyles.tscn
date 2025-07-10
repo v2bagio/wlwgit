@@ -1,0 +1,122 @@
+[gd_scene load_steps=4 format=3 uid="uid://w3wa4ylf4obu"]
+
+[ext_resource type="Texture2D" uid="uid://cmubm2bfel73i" path="res://assets/backgrounds/greenish.png" id="1_rynv1"]
+[ext_resource type="Texture2D" uid="uid://cr8my7xla8460" path="res://assets/alternate/capivara_alt.jpg" id="2_osrrw"]
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_rynv1"]
+bg_color = Color(0.545098, 0.270588, 0.0745098, 1)
+draw_center = false
+border_width_left = 12
+border_width_top = 12
+border_width_right = 12
+border_width_bottom = 12
+border_color = Color(0.545098, 0.270588, 0.0745098, 1)
+corner_radius_top_left = 30
+corner_radius_top_right = 30
+corner_radius_bottom_right = 30
+corner_radius_bottom_left = 30
+corner_detail = 10
+
+[node name="Node2D" type="Node2D"]
+
+[node name="TextureRect" type="TextureRect" parent="."]
+clip_contents = true
+custom_minimum_size = Vector2(750, 1050)
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_right = 750.0
+offset_bottom = 1050.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="Background" type="TextureRect" parent="TextureRect"]
+custom_minimum_size = Vector2(750, 1050)
+offset_right = 750.0
+offset_bottom = 1050.0
+texture = ExtResource("1_rynv1")
+expand_mode = 1
+
+[node name="Cardstyle" type="ColorRect" parent="TextureRect"]
+visible = false
+layout_mode = 0
+offset_left = 8.0
+offset_top = 10.0
+offset_right = 758.0
+offset_bottom = 1060.0
+color = Color(1, 0.992157, 0.815686, 1)
+
+[node name="PanelContainer2" type="PanelContainer" parent="TextureRect"]
+clip_contents = true
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -519.0
+offset_top = -533.0
+offset_right = 381.0
+offset_bottom = 236.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="CapivaraAlt" type="Sprite2D" parent="TextureRect/PanelContainer2"]
+position = Vector2(386.75, 382.5)
+scale = Vector2(1.02375, 1.02375)
+texture = ExtResource("2_osrrw")
+
+[node name="Border" type="PanelContainer" parent="TextureRect"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 16.0
+offset_top = 24.0
+offset_right = 40.0
+offset_bottom = 36.0
+grow_horizontal = 2
+grow_vertical = 2
+scale = Vector2(0.93, 0.95)
+theme_override_styles/panel = SubResource("StyleBoxFlat_rynv1")
+
+[node name="TextEdit" type="TextEdit" parent="TextureRect"]
+custom_minimum_size = Vector2(600, 50)
+layout_mode = 1
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 0.19
+offset_left = 68.0
+offset_top = 64.0
+offset_right = -74.0
+offset_bottom = -55.5
+grow_horizontal = 2
+grow_vertical = 2
+editable = false
+
+[node name="TextEdit2" type="TextEdit" parent="TextureRect"]
+layout_mode = 0
+offset_right = 8.0
+offset_bottom = 8.0
+
+[node name="PoderesBox" type="VBoxContainer" parent="."]
+offset_left = 56.0
+offset_top = 856.0
+offset_right = 688.0
+offset_bottom = 968.0
+
+[node name="LabelA" type="Label" parent="PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="LabelC" type="Label" parent="PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="LabelP" type="Label" parent="PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="LabelV" type="Label" parent="PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5

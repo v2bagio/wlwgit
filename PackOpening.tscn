@@ -1,8 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dvikflbg4fy34"]
 
 [ext_resource type="Script" uid="uid://bnv7gua8k86lp" path="res://PackOpening.gd" id="1_cvw7c"]
-
-[sub_resource type="CompressedTexture2D" id="CompressedTexture2D_cvw7c"]
+[ext_resource type="Texture2D" uid="uid://qw7c4vmsl25t" path="res://assets/ui/card_back.png" id="2_nsiks"]
 
 [node name="PackOpeningScene" type="Control"]
 layout_mode = 3
@@ -19,27 +18,19 @@ grow_horizontal = 2
 grow_vertical = 2
 script = ExtResource("1_cvw7c")
 
-[node name="TextureRect" type="TextureRect" parent="."]
+[node name="PanelContainer" type="PanelContainer" parent="."]
+custom_minimum_size = Vector2(190, 280)
 layout_mode = 0
-offset_right = 40.0
-offset_bottom = 40.0
-texture = SubResource("CompressedTexture2D_cvw7c")
+offset_left = 38.5
+offset_top = 60.5
+offset_right = 228.5
+offset_bottom = 340.5
 
-[node name="Background" type="ColorRect" parent="."]
-layout_mode = 1
-anchors_preset = -1
-anchor_left = 0.167
-anchor_top = 0.136
-anchor_right = 0.833
-anchor_bottom = 0.884
-offset_left = -0.0950012
-offset_top = 0.139996
-offset_right = 0.094986
-offset_bottom = 2.15997
-grow_horizontal = 2
-grow_vertical = 2
-pivot_offset = Vector2(-273.5, -35.5)
-color = Color(0.0295066, 0.0295066, 0.0295066, 1)
+[node name="Background" type="TextureRect" parent="PanelContainer"]
+layout_mode = 2
+texture = ExtResource("2_nsiks")
+expand_mode = 1
+stretch_mode = 6
 
 [node name="CardDisplayArea" type="HBoxContainer" parent="."]
 custom_minimum_size = Vector2(1500, 500)

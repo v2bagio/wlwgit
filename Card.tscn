@@ -59,7 +59,6 @@ corner_radius_bottom_right = 5
 corner_radius_bottom_left = 5
 
 [sub_resource type="CompressedTexture2D" id="CompressedTexture2D_hael8"]
-load_path = "res://.godot/imported/card_back.png-0c0960486df04582101fdd48c0179ad0.ctex"
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_3ujke"]
 corner_radius_top_left = 8

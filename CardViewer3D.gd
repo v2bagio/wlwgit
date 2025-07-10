@@ -2,7 +2,6 @@
 extends Control
 
 signal viewer_opened
-signal viewer_closed
 
 @onready var sub_viewport = $ViewportContainer/SubViewport
 @onready var card_mesh = $ViewportContainer/SubViewport/CardMesh

@@ -68,6 +68,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
 text = "Minha coleção"
 
 [node name="Play" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 192.0
 offset_right = 167.0
@@ -77,6 +78,7 @@ theme_override_font_sizes/font_size = 19
 text = "Jogar"
 
 [node name="Marketplace" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 256.0
 offset_right = 167.0
@@ -86,6 +88,7 @@ theme_override_font_sizes/font_size = 19
 text = "Marketplace"
 
 [node name="ConfigMenu" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 991.0
 offset_top = 8.0
 offset_right = 1135.0
@@ -95,6 +98,7 @@ theme_override_font_sizes/font_size = 19
 text = "Configurações"
 
 [node name="Novidades" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 207.0
 offset_top = 8.0
 offset_right = 327.0
@@ -104,6 +108,7 @@ theme_override_font_sizes/font_size = 19
 text = "Novidades"
 
 [node name="AllCollections" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 855.0
 offset_top = 8.0
 offset_right = 983.0
@@ -113,6 +118,7 @@ theme_override_font_sizes/font_size = 18
 text = "Coleções"
 
 [node name="PackStore" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 351.0
 offset_top = 8.0
 offset_right = 511.0
