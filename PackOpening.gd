@@ -10,8 +10,9 @@ const HOLLOW_CHANCE = 0.1 # 10% de chance
 @onready var open_founders_pack_button = $OpenFoundersPackButton
 @onready var card_display_area = $CardDisplayArea
 @onready var view_collection_button = $ViewCollectionButton
-@onready var background = $Background
+@onready var background = $PanelContainer/Background
 @onready var mainmenubutton = $mainmenubutton
+@onready var backbackground = $PanelContainer
 
 func _ready():
 	Global.hover_habilitado = false
@@ -35,6 +36,7 @@ func _open_pack(pack_type: String):
 	ui_fade_tween.parallel().tween_property(open_founders_pack_button, "modulate:a", 0.0, 0.5)
 	ui_fade_tween.parallel().tween_property(view_collection_button, "modulate:a", 0.0, 0.5)
 	ui_fade_tween.parallel().tween_property(mainmenubutton, "modulate:a", 0.0, 0.5)
+	ui_fade_tween.parallel().tween_property(backbackground, "modulate:a", 0.0, 0.5)
 	
 	for child in card_display_area.get_children():
 		child.queue_free()

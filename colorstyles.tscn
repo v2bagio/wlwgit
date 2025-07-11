@@ -32,6 +32,7 @@ grow_vertical = 2
 
 [node name="Background" type="TextureRect" parent="TextureRect"]
 custom_minimum_size = Vector2(750, 1050)
+layout_mode = 0
 offset_right = 750.0
 offset_bottom = 1050.0
 texture = ExtResource("1_rynv1")

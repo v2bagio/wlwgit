@@ -1,0 +1,72 @@
+[gd_scene load_steps=2 format=3 uid="uid://c7d8faf0g1h2i"]
+
+[ext_resource type="Script" uid="uid://dp48ok5vu715t" path="res://CharacteristicBanSystem.gd" id="1"]
+
+[node name="CharacteristicBanSystem" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+grow_horizontal = 2
+grow_vertical = 2
+color = Color(0.1, 0.1, 0.2, 0.9)
+
+[node name="BanInterface" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -300.0
+offset_top = -250.0
+offset_right = 300.0
+offset_bottom = 250.0
+grow_horizontal = 2
+grow_vertical = 2
+
+[node name="PlayerNameLabel" type="Label" parent="BanInterface"]
+layout_mode = 2
+theme_override_font_sizes/font_size = 24
+text = "Jogador 1"
+horizontal_alignment = 1
+
+[node name="InstructionLabel" type="Label" parent="BanInterface"]
+layout_mode = 2
+text = "Selecione 2 características para banir:"
+horizontal_alignment = 1
+
+[node name="TimerLabel" type="Label" parent="BanInterface"]
+layout_mode = 2
+text = "Tempo restante: 30 segundos"
+horizontal_alignment = 1
+
+[node name="ProgressBar" type="ProgressBar" parent="BanInterface"]
+layout_mode = 2
+value = 100.0
+
+[node name="CharacteristicsGrid" type="GridContainer" parent="BanInterface"]
+layout_mode = 2
+size_flags_vertical = 3
+columns = 2
+
+[node name="SelectedBansDisplay" type="RichTextLabel" parent="BanInterface"]
+custom_minimum_size = Vector2(0, 60)
+layout_mode = 2
+bbcode_enabled = true
+text = "Nenhuma característica selecionada"
+fit_content = true
+
+[node name="ConfirmButton" type="Button" parent="BanInterface"]
+layout_mode = 2
+disabled = true
+text = "Confirmar Banimentos"

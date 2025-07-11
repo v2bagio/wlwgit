@@ -1,0 +1,182 @@
+[gd_scene load_steps=2 format=3 uid="uid://bvq8j3k4l5m6n"]
+
+[ext_resource type="Script" path="res://BattleScene.gd" id="1_djasf"]
+
+[node name="BattleScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1")
+
+[node name="Background" type="ColorRect" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+color = Color(0.2, 0.3, 0.4, 1)
+
+[node name="BattleInfo" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 2
+anchor_top = 1.0
+anchor_bottom = 1.0
+offset_left = 20.0
+offset_top = -100.0
+offset_right = 300.0
+offset_bottom = -20.0
+
+[node name="RoundCounter" type="Label" parent="BattleInfo"]
+layout_mode = 2
+text = "Rodada: 1/3"
+horizontal_alignment = 1
+
+[node name="ScoreDisplay" type="Label" parent="BattleInfo"]
+layout_mode = 2
+text = "Jogador 1: 0 - Jogador 2: 0"
+horizontal_alignment = 1
+
+[node name="PlayerAreas" type="HBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 8
+anchor_left = 0.5
+anchor_top = 0.5
+anchor_right = 0.5
+anchor_bottom = 0.5
+offset_left = -400.0
+offset_top = -200.0
+offset_right = 400.0
+offset_bottom = 200.0
+alignment = 1
+
+[node name="Player1Area" type="VBoxContainer" parent="PlayerAreas"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerName" type="Label" parent="PlayerAreas/Player1Area"]
+layout_mode = 2
+text = "Jogador 1"
+horizontal_alignment = 1
+
+[node name="CardSlot" type="Control" parent="PlayerAreas/Player1Area"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+custom_minimum_size = Vector2(190, 280)
+
+[node name="CardSlotBorder" type="NinePatchRect" parent="PlayerAreas/Player1Area/CardSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = preload("res://assets/ui/card_slot_border.png")
+
+[node name="VSLabel" type="Label" parent="PlayerAreas"]
+layout_mode = 2
+text = "VS"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="Player2Area" type="VBoxContainer" parent="PlayerAreas"]
+layout_mode = 2
+size_flags_horizontal = 3
+
+[node name="PlayerName" type="Label" parent="PlayerAreas/Player2Area"]
+layout_mode = 2
+text = "Jogador 2"
+horizontal_alignment = 1
+
+[node name="CardSlot" type="Control" parent="PlayerAreas/Player2Area"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 3
+custom_minimum_size = Vector2(190, 280)
+
+[node name="CardSlotBorder" type="NinePatchRect" parent="PlayerAreas/Player2Area/CardSlot"]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+texture = preload("res://assets/ui/card_slot_border.png")
+
+[node name="CharacteristicSelector" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 3
+anchor_left = 1.0
+anchor_top = 1.0
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = -200.0
+offset_top = -150.0
+offset_right = -20.0
+offset_bottom = -20.0
+visible = false
+
+[node name="SelectorTitle" type="Label" parent="CharacteristicSelector"]
+layout_mode = 2
+text = "Selecione Característica:"
+horizontal_alignment = 1
+
+[node name="AlturaButton" type="Button" parent="CharacteristicSelector"]
+layout_mode = 2
+text = "Altura"
+
+[node name="ComprimentoButton" type="Button" parent="CharacteristicSelector"]
+layout_mode = 2
+text = "Comprimento"
+
+[node name="VelocidadeButton" type="Button" parent="CharacteristicSelector"]
+layout_mode = 2
+text = "Velocidade"
+
+[node name="PesoButton" type="Button" parent="CharacteristicSelector"]
+layout_mode = 2
+text = "Peso"
+
+[node name="BannedCharacteristics" type="RichTextLabel" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -300.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 200.0
+bbcode_enabled = true
+text = "Características Banidas:
+Aguardando fase de banimento..."
+
+[node name="BackToMenuButton" type="Button" parent="."]
+layout_mode = 1
+anchors_preset = 0
+offset_left = 20.0
+offset_top = 20.0
+offset_right = 120.0
+offset_bottom = 50.0
+text = "Menu"
+
+[node name="BattleResultPopup" type="AcceptDialog" parent="."]
+title = "Resultado da Batalha"
+initial_position = 2
+size = Vector2i(400, 300)
+
+[node name="FormatSelector" type="OptionButton" parent="."]
+layout_mode = 1
+anchors_preset = 1
+anchor_left = 1.0
+anchor_right = 1.0
+offset_left = -150.0
+offset_top = 20.0
+offset_right = -20.0
+offset_bottom = 50.0
+selected = 0
+item_count = 4
+popup/item_0/text = "Clássico"
+popup/item_0/id = 0
+popup/item_1/text = "Blitz"
+popup/item_1/id = 1
+popup/item_2/text = "Sobrevivência"
+popup/item_2/id = 2
+popup/item_3/text = "Draft"
+popup/item_3/id = 3
+

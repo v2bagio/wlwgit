@@ -70,9 +70,9 @@ text = "Minha coleção"
 [node name="Play" type="Button" parent="MenuBar"]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 192.0
+offset_top = 176.0
 offset_right = 167.0
-offset_bottom = 225.0
+offset_bottom = 209.0
 theme_override_fonts/font = SubResource("SystemFont_uubjt")
 theme_override_font_sizes/font_size = 19
 text = "Jogar"
@@ -80,9 +80,9 @@ text = "Jogar"
 [node name="Marketplace" type="Button" parent="MenuBar"]
 layout_mode = 0
 offset_left = 23.0
-offset_top = 256.0
+offset_top = 224.0
 offset_right = 167.0
-offset_bottom = 289.0
+offset_bottom = 257.0
 theme_override_fonts/font = SubResource("SystemFont_5yleq")
 theme_override_font_sizes/font_size = 19
 text = "Marketplace"
@@ -126,6 +126,61 @@ offset_bottom = 41.0
 theme_override_fonts/font = SubResource("SystemFont_5yleq")
 theme_override_font_sizes/font_size = 19
 text = "Comprar pacotes"
+
+[node name="BattleClassic" type="Button" parent="MenuBar"]
+offset_left = 23.0
+offset_top = 272.0
+offset_right = 167.0
+offset_bottom = 305.0
+pivot_offset = Vector2(-23, -96)
+theme_override_fonts/font = SubResource("SystemFont_lthh4")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
+text = "BattleClassic"
+
+[node name="BattleBlitz" type="Button" parent="MenuBar"]
+offset_left = 23.0
+offset_top = 456.0
+offset_right = 167.0
+offset_bottom = 489.0
+pivot_offset = Vector2(-23, -96)
+theme_override_fonts/font = SubResource("SystemFont_lthh4")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
+text = "BattleBlitz"
+
+[node name="BattleSurvival" type="Button" parent="MenuBar"]
+offset_left = 23.0
+offset_top = 408.0
+offset_right = 167.0
+offset_bottom = 441.0
+pivot_offset = Vector2(-23, -96)
+theme_override_fonts/font = SubResource("SystemFont_lthh4")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
+text = "BattleSurvival"
+
+[node name="BattleDraft" type="Button" parent="MenuBar"]
+offset_left = 23.0
+offset_top = 360.0
+offset_right = 167.0
+offset_bottom = 393.0
+pivot_offset = Vector2(-23, -96)
+theme_override_fonts/font = SubResource("SystemFont_lthh4")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
+text = "BattleDraft"
+
+[node name="BattleCustom" type="Button" parent="MenuBar"]
+offset_left = 23.0
+offset_top = 312.0
+offset_right = 167.0
+offset_bottom = 345.0
+pivot_offset = Vector2(-23, -96)
+theme_override_fonts/font = SubResource("SystemFont_lthh4")
+theme_override_font_sizes/font_size = 19
+theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
+text = "BattleCustom"
 
 [node name="Fechar" type="Button" parent="."]
 offset_left = 1136.0
