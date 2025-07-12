@@ -4,7 +4,7 @@ extends Control
 signal battle_finished(winner_id: int)
 
 const CardScene = preload("res://Card.tscn")
-const CharBan = preload("res://CharacteristicBanSystem.tscn")
+const CharacteristicBanSystemScene = preload("res://CharacteristicBanSystem.tscn")
 
 # Enums para estados do jogo
 enum GameState {
@@ -23,13 +23,23 @@ enum BattleFormat {
 	DRAFT
 }
 
-# Características disponíveis para banimento
-const CHARACTERISTICS = ["altura", "comprimento", "velocidade", "peso"]
+# Características disponíveis para banimento (agora com maior/menor)
+const CHARACTERISTICS = [
+	"maior_altura", "menor_altura",
+	"maior_comprimento", "menor_comprimento",
+	"maior_velocidade", "menor_velocidade",
+	"maior_peso", "menor_peso"
+]
+
 const CHARACTERISTIC_NAMES = {
-	"altura": "Altura",
-	"comprimento": "Comprimento", 
-	"velocidade": "Velocidade",
-	"peso": "Peso"
+	"maior_altura": "Maior Altura",
+	"menor_altura": "Menor Altura",
+	"maior_comprimento": "Maior Comprimento",
+	"menor_comprimento": "Menor Comprimento",
+	"maior_velocidade": "Maior Velocidade",
+	"menor_velocidade": "Menor Velocidade",
+	"maior_peso": "Maior Peso",
+	"menor_peso": "Menor Peso"
 }
 
 # Nós da interface
@@ -42,7 +52,6 @@ const CHARACTERISTIC_NAMES = {
 @onready var banned_characteristics_display = $BannedCharacteristics
 @onready var battle_result_popup = $BattleResultPopup
 @onready var back_to_menu_button = $BackToMenuButton
-@onready var mainmenu = preload("res://Menu.tscn")
 
 # Variáveis de estado do jogo
 var current_state: GameState = GameState.SETUP
@@ -68,10 +77,12 @@ var player1_bans: Array = []
 var player2_bans: Array = []
 var system_ban: String = ""
 
+# Referência ao sistema de banimento
+var ban_system_instance = null
+
 func _ready():
 	setup_ui()
 	back_to_menu_button.pressed.connect(_on_back_to_menu_pressed)
-	_on_back_to_menu_pressed()
 	start_battle_setup()
 
 func setup_ui():
@@ -93,12 +104,14 @@ func _setup_player_area(area: Control, player_name: String):
 
 func start_battle_setup():
 	"""Inicia a configuração da batalha"""
+	print("BattleScene: Iniciando setup da batalha.")
 	current_state = GameState.SETUP
 	generate_player_decks()
 	transition_to_banning_phase()
 
 func generate_player_decks():
 	"""Gera os decks dos jogadores com cartas aleatórias"""
+	print("BattleScene: Gerando decks dos jogadores.")
 	player1_deck.clear()
 	player2_deck.clear()
 	
@@ -107,102 +120,65 @@ func generate_player_decks():
 		var animal_id1 = CardPoolManager.get_random_animal_id()
 		var animal_id2 = CardPoolManager.get_random_animal_id()
 		
+		# Adicionado verificação para garantir que animal_id não seja vazio
+		if animal_id1.is_empty() or animal_id2.is_empty():
+			printerr("BattleScene: ID de animal vazio ao gerar deck. Verifique AnimalDatabase.gd e CardPoolManager.gd")
+			continue
+
 		var card_data1 = create_card_data(animal_id1)
 		var card_data2 = create_card_data(animal_id2)
 		
-		player1_deck.append(card_data1)
-		player2_deck.append(card_data2)
+		# Adicionado verificação para garantir que card_data não seja vazio
+		if not card_data1.is_empty():
+			player1_deck.append(card_data1)
+		else:
+			printerr("BattleScene: card_data1 vazio para animal_id: ", animal_id1)
+		
+		if not card_data2.is_empty():
+			player2_deck.append(card_data2)
+		else:
+			printerr("BattleScene: card_data2 vazio para animal_id: ", animal_id2)
+	
+	print("BattleScene: Decks gerados. Player1 deck size: ", player1_deck.size(), ", Player2 deck size: ", player2_deck.size())
 
 func create_card_data(animal_id: String) -> Dictionary:
 	"""Cria dados de carta baseados no animal"""
 	var animal_data = AnimalDatabase.get_animal_data(animal_id)
 	if animal_data.is_empty():
+		printerr("BattleScene: Dados do animal não encontrados para ID: ", animal_id)
 		return {}
 	
 	var card = CardScene.instantiate() as Card
+	# Adiciona a carta à árvore de cena temporariamente para que _ready() seja chamado
+	add_child(card)
 	card.setup(animal_id, false, false, false)
 	var card_data = card.get_card_data()
-	card.queue_free()
+	card.queue_free() # Libera a carta da memória após obter os dados
 	
 	return card_data
 
 func transition_to_banning_phase():
 	"""Transição para a fase de banimento de características"""
+	print("BattleScene: Transicionando para fase de banimento.")
 	current_state = GameState.BANNING_PHASE
-	show_banning_interface()
+	
+	ban_system_instance = CharacteristicBanSystemScene.instantiate()
+	add_child(ban_system_instance)
+	# Conecta o sinal antes de iniciar a fase de banimento
+	ban_system_instance.banning_phase_completed.connect(_on_banning_completed)
+	print("BattleScene: Sinal conectado, iniciando fase de banimento")
+	ban_system_instance.start_banning_phase(2, 30.0) # 2 bans por jogador, 30 segundos
 
-func show_banning_interface():
-	"""Mostra a interface de banimento de características"""
-	var banning_popup = create_banning_popup()
-	get_tree().change_scene_to_file("res://CharacteristicBanSystem.tscn")
-	add_child(banning_popup)
-
-func create_banning_popup() -> Control:
-	"""Cria o popup de banimento de características"""
-	var popup = AcceptDialog.new()
-	popup.title = "Fase de Banimento - Jogador %d" % current_player
-	popup.size = Vector2(400, 300)
+func _on_banning_completed(p1_bans: Array, p2_bans: Array, sys_ban: String):
+	"""Callback quando o banimento é completado"""
+	print("BattleScene: *** SINAL RECEBIDO *** banning_phase_completed")
+	print("BattleScene: Player1 bans: ", p1_bans)
+	print("BattleScene: Player2 bans: ", p2_bans)
+	print("BattleScene: System ban: ", sys_ban)
 	
-	var vbox = VBoxContainer.new()
-	popup.add_child(vbox)
-	
-	var instruction = Label.new()
-	instruction.text = "Selecione 2 características para banir:"
-	vbox.add_child(instruction)
-	
-	var characteristics_container = VBoxContainer.new()
-	vbox.add_child(characteristics_container)
-	
-	var selected_bans = []
-	
-	for characteristic in CHARACTERISTICS:
-		var checkbox = CheckBox.new()
-		checkbox.text = CHARACTERISTIC_NAMES[characteristic]
-		checkbox.toggled.connect(func(pressed: bool):
-			if pressed and selected_bans.size() < 2:
-				selected_bans.append(characteristic)
-			elif not pressed:
-				selected_bans.erase(characteristic)
-			
-			# Desabilitar outras checkboxes se já temos 2 selecionadas
-			for child in characteristics_container.get_children():
-				if child is CheckBox and not child.button_pressed:
-					child.disabled = selected_bans.size() >= 2
-		)
-		characteristics_container.add_child(checkbox)
-	
-	var confirm_button = Button.new()
-	confirm_button.text = "Confirmar Banimentos"
-	confirm_button.pressed.connect(func():
-		if selected_bans.size() == 2:
-			process_player_bans(selected_bans)
-			popup.queue_free()
-	)
-	vbox.add_child(confirm_button)
-	
-	return popup
-
-func process_player_bans(bans: Array):
-	"""Processa os banimentos de um jogador"""
-	if current_player == 1:
-		player1_bans = bans.duplicate()
-		current_player = 2
-		show_banning_interface()
-	else:
-		player2_bans = bans.duplicate()
-		process_system_ban()
-		finalize_banning_phase()
-
-func process_system_ban():
-	"""Processa o banimento aleatório do sistema"""
-	var available_for_system_ban = []
-	
-	for characteristic in CHARACTERISTICS:
-		if characteristic not in player1_bans and characteristic not in player2_bans:
-			available_for_system_ban.append(characteristic)
-	
-	if not available_for_system_ban.is_empty():
-		system_ban = available_for_system_ban.pick_random()
+	player1_bans = p1_bans
+	player2_bans = p2_bans
+	system_ban = sys_ban
 	
 	# Atualizar características ativas
 	banned_characteristics = player1_bans + player2_bans + [system_ban]
@@ -211,10 +187,15 @@ func process_system_ban():
 	for characteristic in CHARACTERISTICS:
 		if characteristic not in banned_characteristics:
 			active_characteristics.append(characteristic)
-
-func finalize_banning_phase():
-	"""Finaliza a fase de banimento e mostra o resultado"""
+	
+	print("BattleScene: Características ativas: ", active_characteristics)
+	
 	update_banned_characteristics_display()
+	
+	# Aguardar um frame antes de transicionar para garantir que o sistema de banimento seja removido
+	print("BattleScene: Aguardando frame antes de transicionar")
+	await get_tree().process_frame
+	print("BattleScene: Iniciando transição para seleção de cartas")
 	transition_to_card_selection()
 
 func update_banned_characteristics_display():
@@ -229,59 +210,132 @@ func update_banned_characteristics_display():
 
 func transition_to_card_selection():
 	"""Transição para a seleção de cartas"""
+	print("BattleScene: *** TRANSICIONANDO PARA SELEÇÃO DE CARTAS ***")
 	current_state = GameState.CARD_SELECTION
 	current_player = 1
 	show_card_selection_interface()
 
 func show_card_selection_interface():
 	"""Mostra a interface de seleção de cartas"""
+	print("BattleScene: Mostrando interface de seleção de cartas para Jogador ", current_player)
 	var selection_popup = create_card_selection_popup()
 	add_child(selection_popup)
+	selection_popup.popup_centered() # Garantir que o popup seja exibido
+	print("BattleScene: Popup de seleção de cartas criado e exibido")
 
 func create_card_selection_popup() -> Control:
 	"""Cria o popup de seleção de cartas"""
 	var popup = AcceptDialog.new()
 	popup.title = "Seleção de Carta - Jogador %d" % current_player
 	popup.size = Vector2(800, 600)
+	popup.unresizable = false
 	
 	var vbox = VBoxContainer.new()
 	popup.add_child(vbox)
 	
 	var instruction = Label.new()
 	instruction.text = "Selecione uma carta para a rodada %d:" % current_round
+	instruction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(instruction)
 	
+	var scroll_container = ScrollContainer.new()
+	scroll_container.custom_minimum_size = Vector2(780, 500)
+	vbox.add_child(scroll_container)
+	
 	var cards_container = HBoxContainer.new()
-	vbox.add_child(cards_container)
+	scroll_container.add_child(cards_container)
 	
 	var player_deck = player1_deck if current_player == 1 else player2_deck
 	var used_cards = player1_used_cards if current_player == 1 else player2_used_cards
 	
-	var selected_card_data = null
-	
-	for card_data in player_deck:
+	# Adicionado verificação para garantir que o deck não esteja vazio
+	if player_deck.is_empty():
+		printerr("BattleScene: Deck do jogador ", current_player, " está vazio. Não é possível selecionar cartas.")
+		popup.dialog_text = "Erro: Deck vazio. Não é possível prosseguir."
+		popup.confirmed.connect(func(): popup.queue_free())
+		return popup
+
+	for i in range(player_deck.size()):
+		var card_data = player_deck[i]
 		if card_data in used_cards:
 			continue
-			
-		var card = CardScene.instantiate() as Card
-		cards_container.add_child(card)
-		card.display_card_data(card_data)
-		card.is_face_up = true
-		card.update_visibility()
+		
+		var card_container = VBoxContainer.new()
+		cards_container.add_child(card_container)
+		
+		# Criar carta usando apenas dados, sem instanciar Card.gd
+		var card_display = create_simple_card_display(card_data)
+		card_container.add_child(card_display)
 		
 		var button = Button.new()
 		button.text = "Selecionar"
+		button.custom_minimum_size = Vector2(150, 40)
+		# Usar o índice para evitar problemas de captura de lambda
+		var card_index = i
 		button.pressed.connect(func():
-			selected_card_data = card_data
-			process_card_selection(selected_card_data)
+			process_card_selection(player_deck[card_index])
 			popup.queue_free()
 		)
-		card.add_child(button)
+		card_container.add_child(button)
 	
 	return popup
 
+func create_simple_card_display(card_data: Dictionary) -> Control:
+	"""Cria uma exibição simples da carta usando apenas dados"""
+	var card_container = VBoxContainer.new()
+	card_container.custom_minimum_size = Vector2(150, 200)
+	
+	# Nome do animal
+	var name_label = Label.new()
+	name_label.text = card_data.get("nome", "Animal Desconhecido")
+	name_label.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	name_label.add_theme_font_size_override("font_size", 14)
+	card_container.add_child(name_label)
+	
+	# Imagem (placeholder)
+	var image_placeholder = ColorRect.new()
+	image_placeholder.color = Color.GRAY
+	image_placeholder.custom_minimum_size = Vector2(140, 100)
+	card_container.add_child(image_placeholder)
+	
+	# Características
+	var stats_container = VBoxContainer.new()
+	card_container.add_child(stats_container)
+	
+	var altura_label = Label.new()
+	altura_label.text = "Altura: %.2f m" % card_data.get("altura", 0.0)
+	stats_container.add_child(altura_label)
+	
+	var comprimento_label = Label.new()
+	comprimento_label.text = "Comprimento: %.2f m" % card_data.get("comprimento", 0.0)
+	stats_container.add_child(comprimento_label)
+	
+	var velocidade_label = Label.new()
+	velocidade_label.text = "Velocidade: %.2f km/h" % card_data.get("velocidade", 0.0)
+	stats_container.add_child(velocidade_label)
+	
+	var peso_label = Label.new()
+	peso_label.text = "Peso: %.2f kg" % card_data.get("peso", 0.0)
+	stats_container.add_child(peso_label)
+	
+	# Adicionar borda
+	var border = StyleBoxFlat.new()
+	border.border_width_left = 2
+	border.border_width_right = 2
+	border.border_width_top = 2
+	border.border_width_bottom = 2
+	border.border_color = Color.BLACK
+	border.bg_color = Color.WHITE
+	
+	var panel = Panel.new()
+	panel.add_theme_stylebox_override("panel", border)
+	panel.add_child(card_container)
+	
+	return panel
+
 func process_card_selection(card_data: Dictionary):
 	"""Processa a seleção de carta de um jogador"""
+	print("BattleScene: Processando seleção de carta para Jogador ", current_player, ". Carta selecionada: ", card_data.get("nome", "N/A"))
 	if current_player == 1:
 		player1_current_card = create_card_from_data(card_data)
 		player1_used_cards.append(card_data)
@@ -297,9 +351,11 @@ func process_card_selection(card_data: Dictionary):
 func create_card_from_data(card_data: Dictionary) -> Card:
 	"""Cria uma instância de carta a partir dos dados"""
 	var card = CardScene.instantiate() as Card
+	add_child(card)  # Adicionar à árvore primeiro
 	card.display_card_data(card_data)
 	card.is_face_up = true
 	card.update_visibility()
+	remove_child(card)  # Remover da árvore após configurar
 	return card
 
 func display_player_card(card: Card, player_area: Control):
@@ -314,30 +370,35 @@ func display_player_card(card: Card, player_area: Control):
 
 func transition_to_battle_round():
 	"""Transição para a rodada de batalha"""
+	print("BattleScene: Transicionando para rodada de batalha.")
 	current_state = GameState.BATTLE_ROUND
 	show_characteristic_selection()
 
 func show_characteristic_selection():
 	"""Mostra a seleção de característica para a batalha"""
+	print("BattleScene: Mostrando seleção de característica.")
 	var selection_popup = create_characteristic_selection_popup()
 	add_child(selection_popup)
+	selection_popup.popup_centered()
 
 func create_characteristic_selection_popup() -> Control:
 	"""Cria o popup de seleção de característica"""
 	var popup = AcceptDialog.new()
 	popup.title = "Selecione a Característica - Jogador 1"
-	popup.size = Vector2(300, 200)
+	popup.size = Vector2(400, 300)
 	
 	var vbox = VBoxContainer.new()
 	popup.add_child(vbox)
 	
 	var instruction = Label.new()
 	instruction.text = "Escolha a característica para comparar:"
+	instruction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
 	vbox.add_child(instruction)
 	
 	for characteristic in active_characteristics:
 		var button = Button.new()
 		button.text = CHARACTERISTIC_NAMES[characteristic]
+		button.custom_minimum_size = Vector2(350, 40)
 		button.pressed.connect(func():
 			execute_battle_round(characteristic)
 			popup.queue_free()
@@ -348,6 +409,7 @@ func create_characteristic_selection_popup() -> Control:
 
 func execute_battle_round(characteristic: String):
 	"""Executa a rodada de batalha com a característica selecionada"""
+	print("BattleScene: Executando rodada de batalha com característica: ", characteristic)
 	current_state = GameState.BATTLE_ROUND
 	
 	var player1_value = get_card_characteristic_value(player1_current_card, characteristic)
@@ -359,7 +421,12 @@ func execute_battle_round(characteristic: String):
 
 func get_card_characteristic_value(card: Card, characteristic: String) -> float:
 	"""Obtém o valor de uma característica da carta"""
-	match characteristic:
+	# Extrair a característica base (altura, comprimento, velocidade, peso)
+	var base_characteristic = ""
+	if characteristic.begins_with("maior_") or characteristic.begins_with("menor_"):
+		base_characteristic = characteristic.substr(6) # Remove "maior_" ou "menor_"
+	
+	match base_characteristic:
 		"altura":
 			return card.altura
 		"comprimento":
@@ -373,23 +440,16 @@ func get_card_characteristic_value(card: Card, characteristic: String) -> float:
 
 func determine_round_winner(value1: float, value2: float, characteristic: String) -> int:
 	"""Determina o vencedor da rodada baseado na característica"""
-	# Para este SuperTrunfo, tanto maior quanto menor podem ganhar
-	# Vamos usar uma lógica onde o jogador 1 sempre escolhe se quer maior ou menor
-	var wants_higher = show_higher_lower_choice()
+	var wants_higher = characteristic.begins_with("maior_")
 	
 	if wants_higher:
 		return 1 if value1 > value2 else (2 if value2 > value1 else 0)
 	else:
 		return 1 if value1 < value2 else (2 if value2 < value1 else 0)
 
-func show_higher_lower_choice() -> bool:
-	"""Mostra a escolha entre maior ou menor valor"""
-	# Por simplicidade, vamos assumir que sempre quer o maior valor
-	# Em uma implementação completa, isso seria uma escolha do jogador
-	return true
-
 func show_round_result(characteristic: String, value1: float, value2: float, winner: int):
 	"""Mostra o resultado da rodada"""
+	print("BattleScene: Mostrando resultado da rodada.")
 	current_state = GameState.ROUND_RESULT
 	
 	var result_text = "Resultado da Rodada %d\n\n" % current_round
@@ -410,6 +470,7 @@ func show_round_result(characteristic: String, value1: float, value2: float, win
 	result_popup.dialog_text = result_text
 	result_popup.title = "Resultado da Rodada"
 	add_child(result_popup)
+	result_popup.popup_centered()
 	
 	result_popup.confirmed.connect(func():
 		result_popup.queue_free()
@@ -418,10 +479,13 @@ func show_round_result(characteristic: String, value1: float, value2: float, win
 
 func process_round_end():
 	"""Processa o fim da rodada"""
+	print("BattleScene: Processando fim da rodada.")
 	current_round += 1
 	update_score_display()
 	
-	if current_round > max_rounds or player1_wins > max_rounds/2 or player2_wins > max_rounds/2:
+	# Corrigido: usar divisão de float para evitar warning
+	var half_rounds = float(max_rounds) / 2.0
+	if current_round > max_rounds or float(player1_wins) > half_rounds or float(player2_wins) > half_rounds:
 		show_match_result()
 	else:
 		reset_for_next_round()
@@ -433,6 +497,7 @@ func update_score_display():
 
 func reset_for_next_round():
 	"""Reseta para a próxima rodada"""
+	print("BattleScene: Resetando para próxima rodada.")
 	# Limpar cartas atuais
 	if player1_current_card:
 		player1_current_card.queue_free()
@@ -447,6 +512,7 @@ func reset_for_next_round():
 
 func show_match_result():
 	"""Mostra o resultado final da partida"""
+	print("BattleScene: Mostrando resultado final da partida.")
 	current_state = GameState.MATCH_RESULT
 	
 	var winner_text = ""
@@ -464,13 +530,16 @@ func show_match_result():
 	result_popup.dialog_text = "Fim da Partida!\n\n%s\n\nPlacar Final:\nJogador 1: %d\nJogador 2: %d" % [winner_text, player1_wins, player2_wins]
 	result_popup.title = "Resultado Final"
 	add_child(result_popup)
+	result_popup.popup_centered()
 	
 	result_popup.confirmed.connect(func():
 		result_popup.queue_free()
+		_on_back_to_menu_pressed()
 	)
 
 func _on_back_to_menu_pressed():
 	"""Volta para o menu principal"""
+	print("BattleScene: Voltando para o menu principal.")
 	get_tree().change_scene_to_file("res://Menu.tscn")
 
 # Função para inicializar com formato específico

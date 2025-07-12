@@ -6,14 +6,17 @@
 
 [sub_resource type="SystemFont" id="SystemFont_lthh4"]
 font_names = PackedStringArray("Impact")
+subpixel_positioning = 0
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_lthh4"]
 
 [sub_resource type="SystemFont" id="SystemFont_uubjt"]
 font_names = PackedStringArray("Impact")
+subpixel_positioning = 0
 
 [sub_resource type="SystemFont" id="SystemFont_5yleq"]
 font_names = PackedStringArray("Impact")
+subpixel_positioning = 0
 
 [node name="Menu" type="Node2D"]
 script = ExtResource("1_uubjt")
@@ -128,6 +131,7 @@ theme_override_font_sizes/font_size = 19
 text = "Comprar pacotes"
 
 [node name="BattleClassic" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 272.0
 offset_right = 167.0
@@ -139,6 +143,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
 text = "BattleClassic"
 
 [node name="BattleBlitz" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 456.0
 offset_right = 167.0
@@ -150,6 +155,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
 text = "BattleBlitz"
 
 [node name="BattleSurvival" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 408.0
 offset_right = 167.0
@@ -161,6 +167,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
 text = "BattleSurvival"
 
 [node name="BattleDraft" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 360.0
 offset_right = 167.0
@@ -172,6 +179,7 @@ theme_override_styles/hover = SubResource("StyleBoxFlat_lthh4")
 text = "BattleDraft"
 
 [node name="BattleCustom" type="Button" parent="MenuBar"]
+layout_mode = 0
 offset_left = 23.0
 offset_top = 312.0
 offset_right = 167.0

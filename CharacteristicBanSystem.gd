@@ -4,26 +4,48 @@ extends Control
 signal banning_phase_completed(player1_bans: Array, player2_bans: Array, system_ban: String)
 signal player_ban_selected(player_id: int, banned_characteristics: Array)
 
-const CHARACTERISTICS = ["altura", "comprimento", "velocidade", "peso"]
+# Características base
+const BASE_CHARACTERISTICS = ["altura", "comprimento", "velocidade", "peso"]
+
+# Características completas (maior/menor)
+const CHARACTERISTICS = [
+	"maior_altura", "menor_altura",
+	"maior_comprimento", "menor_comprimento",
+	"maior_velocidade", "menor_velocidade",
+	"maior_peso", "menor_peso"
+]
+
 const CHARACTERISTIC_NAMES = {
-	"altura": "Altura",
-	"comprimento": "Comprimento",
-	"velocidade": "Velocidade", 
-	"peso": "Peso"
+	"maior_altura": "Maior Altura",
+	"menor_altura": "Menor Altura",
+	"maior_comprimento": "Maior Comprimento",
+	"menor_comprimento": "Menor Comprimento",
+	"maior_velocidade": "Maior Velocidade",
+	"menor_velocidade": "Menor Velocidade",
+	"maior_peso": "Maior Peso",
+	"menor_peso": "Menor Peso"
 }
 
 const CHARACTERISTIC_DESCRIPTIONS = {
-	"altura": "Altura do animal em metros",
-	"comprimento": "Comprimento do animal em metros",
-	"velocidade": "Velocidade máxima em km/h",
-	"peso": "Peso do animal em quilogramas"
+	"maior_altura": "O animal com maior altura vence",
+	"menor_altura": "O animal com menor altura vence",
+	"maior_comprimento": "O animal com maior comprimento vence",
+	"menor_comprimento": "O animal com menor comprimento vence",
+	"maior_velocidade": "O animal com maior velocidade vence",
+	"menor_velocidade": "O animal com menor velocidade vence",
+	"maior_peso": "O animal com maior peso vence",
+	"menor_peso": "O animal com menor peso vence"
 }
 
 const CHARACTERISTIC_ICONS = {
-	"altura": "res://assets/icons/height_icon.png",
-	"comprimento": "res://assets/icons/length_icon.png", 
-	"velocidade": "res://assets/icons/speed_icon.png",
-	"peso": "res://assets/icons/weight_icon.png"
+	"maior_altura": "res://assets/icons/height_up_icon.png",
+	"menor_altura": "res://assets/icons/height_down_icon.png",
+	"maior_comprimento": "res://assets/icons/length_up_icon.png",
+	"menor_comprimento": "res://assets/icons/length_down_icon.png",
+	"maior_velocidade": "res://assets/icons/speed_up_icon.png",
+	"menor_velocidade": "res://assets/icons/speed_down_icon.png",
+	"maior_peso": "res://assets/icons/weight_up_icon.png",
+	"menor_peso": "res://assets/icons/weight_down_icon.png"
 }
 
 # Nós da interface
@@ -67,42 +89,50 @@ func setup_interface():
 	create_characteristic_buttons()
 	update_interface_for_current_player()
 	
-	confirm_button.disabled = false
+	confirm_button.disabled = true
 	confirm_button.pressed.connect(_on_confirm_button_pressed)
 
 func create_characteristic_buttons():
-	"""Cria os botões para cada característica"""
+	"""Cria os botões para cada característica em layout de 4 colunas"""
 	characteristic_buttons.clear()
 	
 	# Limpar grid existente
 	for child in characteristics_grid.get_children():
 		child.queue_free()
 	
-	for characteristic in CHARACTERISTICS:
-		var button_container = create_characteristic_button(characteristic)
+	# Configurar o grid para 4 colunas
+	characteristics_grid.columns = 4
+	
+	for _characteristic in CHARACTERISTICS:
+		var button_container = create_characteristic_button(_characteristic)
 		characteristics_grid.add_child(button_container)
 
 func create_characteristic_button(characteristic: String) -> Control:
 	"""Cria um botão para uma característica específica"""
 	var container = VBoxContainer.new()
+	container.custom_minimum_size = Vector2(120, 120)
 	
 	# Botão principal
 	var button = Button.new()
-	button.custom_minimum_size = Vector2(150, 100)
+	button.custom_minimum_size = Vector2(110, 60)
 	button.text = CHARACTERISTIC_NAMES[characteristic]
 	button.toggle_mode = true
+	button.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	
-	# Ícone da característica
+	# Ícone da característica (assumindo que você terá os ícones)
 	var icon = TextureRect.new()
-	icon.texture = load(CHARACTERISTIC_ICONS.get(characteristic, ""))
+	# Verifique se o ícone existe antes de carregar
+	if ResourceLoader.exists(CHARACTERISTIC_ICONS.get(characteristic, "")):
+		icon.texture = load(CHARACTERISTIC_ICONS.get(characteristic, ""))
 	icon.expand_mode = TextureRect.EXPAND_FIT_WIDTH_PROPORTIONAL
-	icon.custom_minimum_size = Vector2(32, 32)
+	icon.custom_minimum_size = Vector2(24, 24)
 	
 	# Descrição
 	var description = Label.new()
 	description.text = CHARACTERISTIC_DESCRIPTIONS[characteristic]
 	description.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	description.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	description.custom_minimum_size = Vector2(110, 40)
 	
 	# Conectar sinal
 	button.toggled.connect(func(pressed: bool): _on_characteristic_button_toggled(characteristic, pressed))
@@ -218,6 +248,7 @@ func update_button_states():
 	var max_reached = selected_bans.size() >= max_bans_per_player
 	
 	for button_data in characteristic_buttons:
+		@warning_ignore("unused_variable")
 		var characteristic = button_data.characteristic
 		var button = button_data.button
 		
@@ -262,59 +293,100 @@ func process_system_ban():
 	if not available_for_system_ban.is_empty():
 		system_ban = available_for_system_ban.pick_random()
 	
+	print("CharacteristicBanSystem: Sistema baniu: ", system_ban)
 	finalize_banning_phase()
 
 func finalize_banning_phase():
 	"""Finaliza a fase de banimento"""
+	print("CharacteristicBanSystem: Finalizando fase de banimento")
 	ban_interface.visible = false
 	show_banning_results()
 
 func show_banning_results():
 	"""Mostra os resultados do banimento"""
+	print("CharacteristicBanSystem: Mostrando resultados do banimento")
 	var results_popup = create_results_popup()
-	add_child(results_popup)
+	get_tree().current_scene.add_child(results_popup)
+	results_popup.popup_centered()
+	print("CharacteristicBanSystem: Popup de resultados criado e exibido")
 
 func create_results_popup() -> AcceptDialog:
 	"""Cria o popup com os resultados do banimento"""
 	var popup = AcceptDialog.new()
 	popup.title = "Resultados do Banimento"
-	popup.size = Vector2(500, 400)
+	popup.size = Vector2(600, 400)
+	popup.unresizable = false
+	
+	# Criar o conteúdo do popup manualmente
+	var scroll = ScrollContainer.new()
+	scroll.custom_minimum_size = Vector2(580, 350)
+	popup.add_child(scroll)
 	
 	var vbox = VBoxContainer.new()
-	popup.add_child(vbox)
+	scroll.add_child(vbox)
 	
 	var title = Label.new()
 	title.text = "Características Banidas"
 	title.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+	title.add_theme_font_size_override("font_size", 18)
 	vbox.add_child(title)
+	
+	vbox.add_child(HSeparator.new())
 	
 	# Banimentos do Jogador 1
 	var p1_label = Label.new()
 	p1_label.text = "Jogador 1: " + ", ".join(player1_bans.map(func(c): return CHARACTERISTIC_NAMES[c]))
+	p1_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(p1_label)
 	
 	# Banimentos do Jogador 2
 	var p2_label = Label.new()
 	p2_label.text = "Jogador 2: " + ", ".join(player2_bans.map(func(c): return CHARACTERISTIC_NAMES[c]))
+	p2_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(p2_label)
 	
 	# Banimento do Sistema
 	var system_label = Label.new()
 	system_label.text = "Sistema: " + CHARACTERISTIC_NAMES.get(system_ban, "Nenhuma")
+	system_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
 	vbox.add_child(system_label)
+	
+	vbox.add_child(HSeparator.new())
 	
 	# Características Ativas
 	var active_characteristics = get_active_characteristics()
 	var active_label = Label.new()
 	active_label.text = "Características Ativas: " + ", ".join(active_characteristics.map(func(c): return CHARACTERISTIC_NAMES[c]))
+	active_label.autowrap_mode = TextServer.AUTOWRAP_WORD_SMART
+	active_label.add_theme_font_size_override("font_size", 14)
 	vbox.add_child(active_label)
 	
-	popup.confirmed.connect(func():
+	# Conectar o sinal de confirmação
+	popup.confirmed.connect(_on_results_popup_confirmed)
+	
+	# Adicionar um timer para auto-fechar se necessário (corrigido)
+	var timer = Timer.new()
+	timer.wait_time = 10.0  # 10 segundos
+	timer.one_shot = true
+	popup.add_child(timer)  # Adicionar à árvore ANTES de conectar e iniciar
+	timer.timeout.connect(func():
+		print("CharacteristicBanSystem: Auto-fechando popup por timeout")
+		_on_results_popup_confirmed()
 		popup.queue_free()
-		emit_signal("banning_phase_completed", player1_bans, player2_bans, system_ban)
 	)
+	timer.start()
 	
 	return popup
+
+func _on_results_popup_confirmed():
+	"""Callback quando o popup de resultados é confirmado"""
+	print("CharacteristicBanSystem: Popup confirmado, emitindo sinal")
+	# Emitir o sinal ANTES de liberar o nó
+	banning_phase_completed.emit(player1_bans, player2_bans, system_ban)
+	print("CharacteristicBanSystem: Sinal emitido, liberando nó")
+	# Aguardar um frame antes de liberar para garantir que o sinal seja processado
+	await get_tree().process_frame
+	queue_free()
 
 func auto_select_bans():
 	"""Seleciona banimentos automaticamente quando o tempo acaba"""

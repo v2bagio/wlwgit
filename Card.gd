@@ -95,6 +95,9 @@ func setup(p_animal_id: String, p_is_full_art: bool = false, p_is_hollow: bool =
 	self.bioma = possible_biomes.pick_random() if not possible_biomes.is_empty() else "Desconhecido"
 	self.background_path = AnimalDatabase.get_random_background(self.bioma)
 	
+	# Antes de chamar display_card_data, garanta que nome_label.text tenha um valor
+	nome_label.text = stored_card_data.get("nome_display", "N/A") # Definir aqui
+	
 	display_card_data(get_card_data())
 	
 	var archetype_matches = 0
@@ -114,7 +117,7 @@ func setup(p_animal_id: String, p_is_full_art: bool = false, p_is_hollow: bool =
 		
 	_determine_and_apply_rarity(archetype_matches, archetype_mismatches)
 
-	nome_label.text = stored_card_data.get("nome_display", "N/A")
+	# nome_label.text = stored_card_data.get("nome_display", "N/A") # Removido daqui
 	foto_animal.texture = _load_texture_safely(self.imagem_path)
 	card_background.texture = _load_texture_safely(self.background_path)
 	_set_frame_color(self.bioma)
@@ -193,16 +196,16 @@ func _load_texture_safely(path: String) -> Texture2D:
 		if resource is Texture2D:
 			return resource
 		else:
-			printerr("Recurso no caminho '", path, "' não é uma Texture2D.")
+			printerr("Recurso no caminho \'", path, "\' não é uma Texture2D.")
 			return null
 	if FileAccess.file_exists(path):
 		var image = Image.load_from_file(path)
 		if image:
 			return ImageTexture.create_from_image(image)
 		else:
-			printerr("Arquivo em '", path, "' existe, mas não pôde ser carregado como Imagem.")
+			printerr("Arquivo em \'", path, "\' existe, mas não pôde ser carregado como Imagem.")
 			return null
-	printerr("Falha ao carregar textura. Caminho não encontrado: '", path, "'")
+	printerr("Falha ao carregar textura. Caminho não encontrado: \'", path, "\' ")
 	return null
 
 func enable_flip(enabled: bool):
@@ -261,10 +264,10 @@ func apply_visual_treatments():
 func _determine_and_apply_rarity(match_count: int, mismatch_count: int):
 	if match_count == 4: self.raridade = "Lendária"
 	elif mismatch_count == 4: self.raridade = "Anomalia Lendária"
-	elif match_count == 3: self.raridade = "Rara"
 	elif mismatch_count == 3: self.raridade = "Anomalia Rara"
-	elif match_count == 2: self.raridade = "Incomum"
+	elif match_count == 3: self.raridade = "Rara"
 	elif mismatch_count == 2: self.raridade = "Anomalia Incomum"
+	elif match_count == 2: self.raridade = "Incomum"
 	else: self.raridade = "Comum"
 	_apply_rarity_gem_color(self.raridade)
 
