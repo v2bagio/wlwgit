@@ -1,0 +1,104 @@
+[gd_scene load_steps=4 format=3 uid="uid://cdg4dqbdek051"]
+
+[ext_resource type="Script" uid="uid://d0j3f3j3f3j" path="res://CardViewer3D_Improved.gd" id="2_d0j3f"]
+
+[sub_resource type="StandardMaterial3D" id="1_material"]
+
+[sub_resource type="BoxMesh" id="2_mesh"]
+size = Vector3(1.4, 2.05, 0.02)
+
+[node name="CardViewer3D_Improved" type="Control"]
+layout_mode = 3
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
+script = ExtResource("2_d0j3f")
+
+[node name="TextureRect" type="TextureRect" parent="."]
+layout_mode = 1
+offset_right = 1152.0
+offset_bottom = 648.0
+mouse_filter = 0
+expand_mode = 1
+
+[node name="ViewportContainer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+offset_left = 336.0
+offset_top = -4.0
+offset_right = 768.0
+offset_bottom = 644.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="ViewportContainer"]
+handle_input_locally = false
+size = Vector2i(432, 648)
+render_target_update_mode = 4
+
+[node name="CardMesh" type="MeshInstance3D" parent="ViewportContainer/SubViewport"]
+material_override = SubResource("1_material")
+mesh = SubResource("2_mesh")
+
+[node name="Camera3D" type="Camera3D" parent="ViewportContainer/SubViewport"]
+transform = Transform3D(1, 0, 0, 0, 1, 0, 0, 0, 1, 0, 0, 2.8)
+
+[node name="MarginContainer" type="MarginContainer" parent="."]
+layout_mode = 1
+offset_left = 16.0
+offset_top = 8.0
+offset_right = 168.0
+offset_bottom = 224.0
+mouse_filter = 2
+
+[node name="VBoxContainer" type="VBoxContainer" parent="MarginContainer"]
+layout_mode = 2
+size_flags_horizontal = 4
+size_flags_vertical = 0
+
+[node name="TitleLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Nome da Carta"
+horizontal_alignment = 1
+
+[node name="DescriptionLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Descrição da Carta"
+horizontal_alignment = 1
+autowrap_mode = 2
+
+[node name="ArtistLabel" type="Label" parent="MarginContainer/VBoxContainer"]
+layout_mode = 2
+text = "Artista"
+horizontal_alignment = 1
+
+[node name="CloseButton" type="Button" parent="."]
+layout_mode = 1
+offset_left = 1112.0
+offset_right = 1152.0
+offset_bottom = 40.0
+text = "X"
+
+[node name="CardFrontRenderer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+offset_left = -288.0
+offset_top = 144.0
+offset_right = -98.0
+offset_bottom = 424.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CardFrontRenderer"]
+handle_input_locally = false
+size = Vector2i(190, 280)
+render_target_update_mode = 4
+
+[node name="CardBackRenderer" type="SubViewportContainer" parent="."]
+layout_mode = 1
+offset_left = 744.0
+offset_top = 184.0
+offset_right = 934.0
+offset_bottom = 464.0
+stretch = true
+
+[node name="SubViewport" type="SubViewport" parent="CardBackRenderer"]
+handle_input_locally = false
+size = Vector2i(190, 280)
+render_target_update_mode = 4

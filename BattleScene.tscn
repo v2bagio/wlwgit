@@ -4,32 +4,23 @@
 
 [node name="BattleScene" type="Control"]
 layout_mode = 3
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = 0
+offset_right = 1152.0
+offset_bottom = 648.0
 script = ExtResource("1_ttbo7")
 
 [node name="Background" type="ColorRect" parent="."]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+offset_right = 1152.0
+offset_bottom = 648.0
 color = Color(0.2, 0.3, 0.4, 1)
 
 [node name="BattleInfo" type="VBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 2
-anchor_top = 1.0
-anchor_bottom = 1.0
 offset_left = 20.0
-offset_top = -100.0
+offset_top = 548.0
 offset_right = 300.0
-offset_bottom = -20.0
-grow_vertical = 0
+offset_bottom = 628.0
 
 [node name="RoundCounter" type="Label" parent="BattleInfo"]
 layout_mode = 2
@@ -43,22 +34,19 @@ horizontal_alignment = 1
 
 [node name="PlayerAreas" type="HBoxContainer" parent="."]
 layout_mode = 1
-anchors_preset = 8
-anchor_left = 0.5
-anchor_top = 0.5
-anchor_right = 0.5
-anchor_bottom = 0.5
-offset_left = -400.0
-offset_top = -200.0
-offset_right = 400.0
-offset_bottom = 200.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = -1
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 591.0
+offset_top = 266.0
+offset_right = 239.0
+offset_bottom = 18.0
 alignment = 1
 
 [node name="Player1Area" type="VBoxContainer" parent="PlayerAreas"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_vertical = 0
 alignment = 1
 
 [node name="PlayerName" type="Label" parent="PlayerAreas/Player1Area"]
@@ -73,11 +61,15 @@ size_flags_vertical = 3
 
 [node name="CardSlotBorder" type="NinePatchRect" parent="PlayerAreas/Player1Area/CardSlot"]
 layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+anchors_preset = -1
+anchor_left = -1.526
+anchor_top = -0.89
+anchor_right = -1.526
+anchor_bottom = -0.89
+offset_left = 1177.04
+offset_top = 410.2
+offset_right = 1367.04
+offset_bottom = 690.2
 region_rect = Rect2(407.444, 189.457, 0.19754, 0.197525)
 
 [node name="VSLabel" type="Label" parent="PlayerAreas"]
@@ -87,8 +79,9 @@ horizontal_alignment = 1
 vertical_alignment = 1
 
 [node name="Player2Area" type="VBoxContainer" parent="PlayerAreas"]
+custom_minimum_size = Vector2(250, 0)
 layout_mode = 2
-size_flags_horizontal = 3
+size_flags_vertical = 0
 alignment = 1
 
 [node name="PlayerName" type="Label" parent="PlayerAreas/Player2Area"]
@@ -103,12 +96,11 @@ size_flags_horizontal = 4
 size_flags_vertical = 3
 
 [node name="CardSlotBorder" type="NinePatchRect" parent="PlayerAreas/Player2Area/CardSlot"]
-layout_mode = 1
-anchors_preset = 15
-anchor_right = 1.0
-anchor_bottom = 1.0
-grow_horizontal = 2
-grow_vertical = 2
+layout_mode = 0
+offset_left = 258.0
+offset_top = 183.0
+offset_right = 448.0
+offset_bottom = 463.0
 
 [node name="CharacteristicSelector" type="VBoxContainer" parent="."]
 visible = false
@@ -148,14 +140,10 @@ text = "Peso"
 
 [node name="BannedCharacteristics" type="RichTextLabel" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -300.0
-offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 200.0
-grow_horizontal = 0
+offset_left = 400.0
+offset_top = 492.0
+offset_right = 763.0
+offset_bottom = 648.0
 bbcode_enabled = true
 text = "Características Banidas:
 Aguardando fase de banimento..."
@@ -175,14 +163,10 @@ size = Vector2i(400, 300)
 
 [node name="FormatSelector" type="OptionButton" parent="."]
 layout_mode = 1
-anchors_preset = 1
-anchor_left = 1.0
-anchor_right = 1.0
-offset_left = -150.0
+offset_left = 176.0
 offset_top = 20.0
-offset_right = -20.0
-offset_bottom = 50.0
-grow_horizontal = 0
+offset_right = 316.0
+offset_bottom = 51.0
 selected = 0
 item_count = 4
 popup/item_0/text = "Clássico"

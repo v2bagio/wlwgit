@@ -86,7 +86,7 @@ func _ready():
 	start_battle_setup()
 
 func setup_ui():
-	"""Configura a interface inicial da batalha"""
+	# Configura a interface inicial da batalha
 	round_counter.text = "Rodada: %d/%d" % [current_round, max_rounds]
 	score_display.text = "Jogador 1: %d - Jogador 2: %d" % [player1_wins, player2_wins]
 	
@@ -95,7 +95,7 @@ func setup_ui():
 	_setup_player_area(player2_area, "Jogador 2")
 
 func _setup_player_area(area: Control, player_name: String):
-	"""Configura a área de um jogador"""
+	# Configura a área de um jogador
 	var name_label = area.get_node("PlayerName")
 	name_label.text = player_name
 	
@@ -103,14 +103,14 @@ func _setup_player_area(area: Control, player_name: String):
 	card_slot.custom_minimum_size = Vector2(190, 280)
 
 func start_battle_setup():
-	"""Inicia a configuração da batalha"""
+	# Inicia a configuração da batalha
 	print("BattleScene: Iniciando setup da batalha.")
 	current_state = GameState.SETUP
 	generate_player_decks()
 	transition_to_banning_phase()
 
 func generate_player_decks():
-	"""Gera os decks dos jogadores a partir da coleção"""
+	# Gera os decks dos jogadores a partir da coleção
 	print("BattleScene: Carregando decks dos jogadores da coleção.")
 	player1_deck.clear()
 	player2_deck.clear()
@@ -133,7 +133,7 @@ func generate_player_decks():
 	print("BattleScene: Decks carregados da coleção. Player1 deck size: ", player1_deck.size(), ", Player2 deck size: ", player2_deck.size())
 
 func _generate_random_decks_fallback():
-	"""Gera decks aleatórios como fallback se a coleção não tiver cartas suficientes"""
+	# Gera decks aleatórios como fallback se a coleção não tiver cartas suficientes
 	print("BattleScene: Gerando decks aleatórios como fallback.")
 	player1_deck.clear()
 	player2_deck.clear()
@@ -160,7 +160,7 @@ func _generate_random_decks_fallback():
 			printerr("BattleScene: card_data2 vazio para animal_id: ", animal_id2)
 
 func create_card_data(animal_id: String) -> Dictionary:
-	"""Cria dados de carta baseados no animal"""
+	# Cria dados de carta baseados no animal
 	var animal_data = AnimalDatabase.get_animal_data(animal_id)
 	if animal_data.is_empty():
 		printerr("BattleScene: Dados do animal não encontrados para ID: ", animal_id)
@@ -176,7 +176,7 @@ func create_card_data(animal_id: String) -> Dictionary:
 	return card_data
 
 func transition_to_banning_phase():
-	"""Transição para a fase de banimento de características"""
+	# Transição para a fase de banimento de características
 	print("BattleScene: Transicionando para fase de banimento.")
 	current_state = GameState.BANNING_PHASE
 	
@@ -188,7 +188,7 @@ func transition_to_banning_phase():
 	ban_system_instance.start_banning_phase(2, 30.0) # 2 bans por jogador, 30 segundos
 
 func _on_banning_completed(p1_bans: Array, p2_bans: Array, sys_ban: String):
-	"""Callback quando o banimento é completado"""
+	# Callback quando o banimento é completado
 	print("BattleScene: *** SINAL RECEBIDO *** banning_phase_completed")
 	print("BattleScene: Player1 bans: ", p1_bans)
 	print("BattleScene: Player2 bans: ", p2_bans)
@@ -217,7 +217,7 @@ func _on_banning_completed(p1_bans: Array, p2_bans: Array, sys_ban: String):
 	transition_to_card_selection()
 
 func update_banned_characteristics_display():
-	"""Atualiza a exibição das características banidas"""
+	# "Atualiza a exibição das características banidas"
 	var display_text = "Características Banidas:\n"
 	display_text += "Jogador 1: %s\n" % ", ".join(player1_bans.map(func(c): return CHARACTERISTIC_NAMES[c]))
 	display_text += "Jogador 2: %s\n" % ", ".join(player2_bans.map(func(c): return CHARACTERISTIC_NAMES[c]))
@@ -227,14 +227,14 @@ func update_banned_characteristics_display():
 	banned_characteristics_display.text = display_text
 
 func transition_to_card_selection():
-	"""Transição para a seleção de cartas"""
+	# Transição para a seleção de cartas
 	print("BattleScene: *** TRANSICIONANDO PARA SELEÇÃO DE CARTAS ***")
 	current_state = GameState.CARD_SELECTION
 	current_player = 1
 	show_card_selection_interface()
 
 func show_card_selection_interface():
-	"""Mostra a interface de seleção de cartas"""
+	# "Mostra a interface de seleção de cartas"
 	print("BattleScene: Mostrando interface de seleção de cartas para Jogador ", current_player)
 	var selection_popup = _selection_popup()
 	if selection_popup != null:
@@ -354,7 +354,7 @@ func create_simple_card_display(card_data: Dictionary) -> Control:
 	return panel
 
 func process_card_selection(card_data: Dictionary):
-	"""Processa a seleção de carta de um jogador"""
+	# "Processa a seleção de carta de um jogador"
 	print("BattleScene: Processando seleção de carta para Jogador ", current_player, ". Carta selecionada: ", card_data.get("nome", "N/A"))
 	if current_player == 1:
 		player1_current_card = create_card_from_data(card_data)
@@ -371,7 +371,7 @@ func process_card_selection(card_data: Dictionary):
 		transition_to_battle_round()
 
 func create_card_from_data(card_data: Dictionary) -> Card:
-	"""Cria uma instância de carta a partir dos dados"""
+	# "Cria uma instância de carta a partir dos dados"
 	var card = CardScene.instantiate() as Card
 	add_child(card)  # Adicionar à árvore primeiro
 	card.display_card_data(card_data)
@@ -381,7 +381,7 @@ func create_card_from_data(card_data: Dictionary) -> Card:
 	return card
 
 func display_player_card(card: Card, player_area: Control):
-	"""Exibe a carta de um jogador na sua área"""
+	# "Exibe a carta de um jogador na sua área"
 	var card_slot = player_area.get_node("CardSlot")
 	
 	# Limpar carta anterior
@@ -391,13 +391,13 @@ func display_player_card(card: Card, player_area: Control):
 	card_slot.add_child(card)
 
 func transition_to_battle_round():
-	"""Transição para a rodada de batalha"""
+	# "Transição para a rodada de batalha"
 	print("BattleScene: Transicionando para rodada de batalha.")
 	current_state = GameState.BATTLE_ROUND
 	show_characteristic_selection()
 
 func show_characteristic_selection():
-	"""Mostra a seleção de característica para a batalha"""
+	# "Mostra a seleção de característica para a batalha"
 	print("BattleScene: Mostrando seleção de característica.")
 	var selection_popup = create_characteristic_selection_popup()
 	if selection_popup != null:
@@ -435,7 +435,7 @@ func create_characteristic_selection_popup() -> AcceptDialog:
 	return popup
 
 func execute_battle_round(characteristic: String):
-	"""Executa a rodada de batalha com a característica selecionada"""
+	# "Executa a rodada de batalha com a característica selecionada"
 	print("BattleScene: Executando rodada de batalha com característica: ", characteristic)
 	current_state = GameState.BATTLE_ROUND
 	
@@ -447,7 +447,7 @@ func execute_battle_round(characteristic: String):
 	show_round_result(characteristic, player1_value, player2_value, winner)
 
 func get_card_characteristic_value(card: Card, characteristic: String) -> float:
-	"""Obtém o valor de uma característica da carta"""
+	# Obtém o valor de uma característica da carta
 	# Extrair a característica base (altura, comprimento, velocidade, peso)
 	var base_characteristic = ""
 	if characteristic.begins_with("maior_") or characteristic.begins_with("menor_"):
@@ -466,7 +466,7 @@ func get_card_characteristic_value(card: Card, characteristic: String) -> float:
 			return 0.0
 
 func determine_round_winner(value1: float, value2: float, characteristic: String) -> int:
-	"""Determina o vencedor da rodada baseado na característica"""
+	# Determina o vencedor da rodada baseado na característica
 	var wants_higher = characteristic.begins_with("maior_")
 	
 	if wants_higher:
@@ -475,7 +475,7 @@ func determine_round_winner(value1: float, value2: float, characteristic: String
 		return 1 if value1 < value2 else (2 if value2 < value1 else 0)
 
 func show_round_result(characteristic: String, value1: float, value2: float, winner: int):
-	"""Mostra o resultado da rodada"""
+	# Mostra o resultado da rodada
 	print("BattleScene: Mostrando resultado da rodada.")
 	current_state = GameState.ROUND_RESULT
 	
@@ -505,7 +505,7 @@ func show_round_result(characteristic: String, value1: float, value2: float, win
 	)
 
 func process_round_end():
-	"Processa o fim da rodada"
+	#"Processa o fim da rodada"
 	print("BattleScene: Processando fim da rodada.")
 	current_round += 1
 	update_score_display()
@@ -518,12 +518,12 @@ func process_round_end():
 		reset_for_next_round()
 
 func update_score_display():
-	"Atualiza a exibição do placar"
+	#"Atualiza a exibição do placar"
 	round_counter.text = "Rodada: %d/%d" % [current_round, max_rounds]
 	score_display.text = "Jogador 1: %d - Jogador 2: %d" % [player1_wins, player2_wins]
 
 func reset_for_next_round():
-	"Reseta para a próxima rodada"
+	#"Reseta para a próxima rodada"
 	print("BattleScene: Resetando para próxima rodada.")
 	# Limpar cartas atuais
 	if player1_current_card:
@@ -538,7 +538,7 @@ func reset_for_next_round():
 	transition_to_card_selection()
 
 func show_match_result():
-	"Mostra o resultado final da partida"
+	#"Mostra o resultado final da partida"
 	print("BattleScene: Mostrando resultado final da partida.")
 	current_state = GameState.MATCH_RESULT
 	
@@ -565,13 +565,13 @@ func show_match_result():
 	)
 
 func _on_back_to_menu_pressed():
-	"Volta para o menu principal"
+	#"Volta para o menu principal"
 	print("BattleScene: Voltando para o menu principal.")
 	get_tree().change_scene_to_file("res://Menu.tscn")
 
 # Função para inicializar com formato específico
 func initialize_battle(format: BattleFormat = BattleFormat.CLASSIC):
-	"Inicializa a batalha com um formato específico"
+	#"Inicializa a batalha com um formato específico"
 	battle_format = format
 	
 	match format:
@@ -589,7 +589,7 @@ func initialize_battle(format: BattleFormat = BattleFormat.CLASSIC):
 	start_battle_setup()
 
 func generate_draft_pool():
-	"Gera um pool comum de cartas para o formato draft"
+	#"Gera um pool comum de cartas para o formato draft"
 	var draft_pool = []
 	
 	# Gerar 12 cartas para o draft (6 para cada jogador)
