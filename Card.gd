@@ -1,4 +1,4 @@
-# Card.gd (Versão final corrigida e mais robusta)
+# Card.gd
 class_name Card
 extends Control
 
@@ -63,7 +63,7 @@ func _ready():
 	connect("mouse_entered", Callable(self, "_on_mouse_entered"))
 	connect("mouse_exited", Callable(self, "_on_mouse_exited"))
 	
-	var verso_texture = _load_texture_safely("res://assets/ui/card_back.jpg")
+	var verso_texture = _load_texture_safely("res://assets/ui/card_back.png")
 	if verso_texture == null:
 		verso_texture = _load_texture_safely("res://assets/ui/card_back.png")
 

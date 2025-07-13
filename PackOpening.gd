@@ -96,7 +96,7 @@ func _open_pack(pack_type: String):
 		var card_tween = create_tween()
 		new_card.modulate.a = 0
 		new_card.scale = Vector2(0.8, 0.8)
-		card_tween.tween_interval(0.5 + (i * 0.35))
+		card_tween.tween_interval(0.05 + (i * 0.4))
 		card_tween.tween_property(new_card, "modulate:a", 1.0, 0.3)
 		card_tween.parallel().tween_property(new_card, "scale", Vector2(1.0, 1.0), 0.3).set_trans(Tween.TRANS_BACK)
 
