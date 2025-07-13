@@ -110,25 +110,45 @@ func start_battle_setup():
 	transition_to_banning_phase()
 
 func generate_player_decks():
-	"""Gera os decks dos jogadores com cartas aleatórias"""
-	print("BattleScene: Gerando decks dos jogadores.")
+	"""Gera os decks dos jogadores a partir da coleção"""
+	print("BattleScene: Carregando decks dos jogadores da coleção.")
 	player1_deck.clear()
 	player2_deck.clear()
 	
-	# Gerar 5 cartas para cada jogador
+	# Para testes locais, vamos simular a obtenção de cartas da coleção
+	# Em um ambiente multiplayer, isso viria da coleção de cada jogador
+	var all_available_cards = PlayerCollection.get_collection()
+	
+	if all_available_cards.size() < 10:
+		printerr("BattleScene: Não há cartas suficientes na coleção para formar os decks. Necessário pelo menos 10 cartas.")
+		# Fallback para gerar cartas aleatórias se não houver o suficiente na coleção
+		_generate_random_decks_fallback()
+		return
+	
+	# Embaralhar as cartas e distribuir para os jogadores
+	all_available_cards.shuffle()
+	player1_deck = all_available_cards.slice(0, 5)
+	player2_deck = all_available_cards.slice(5, 10)
+	
+	print("BattleScene: Decks carregados da coleção. Player1 deck size: ", player1_deck.size(), ", Player2 deck size: ", player2_deck.size())
+
+func _generate_random_decks_fallback():
+	"""Gera decks aleatórios como fallback se a coleção não tiver cartas suficientes"""
+	print("BattleScene: Gerando decks aleatórios como fallback.")
+	player1_deck.clear()
+	player2_deck.clear()
+	
 	for i in range(5):
 		var animal_id1 = CardPoolManager.get_random_animal_id()
 		var animal_id2 = CardPoolManager.get_random_animal_id()
 		
-		# Adicionado verificação para garantir que animal_id não seja vazio
 		if animal_id1.is_empty() or animal_id2.is_empty():
-			printerr("BattleScene: ID de animal vazio ao gerar deck. Verifique AnimalDatabase.gd e CardPoolManager.gd")
+			printerr("BattleScene: ID de animal vazio ao gerar deck fallback.")
 			continue
 
 		var card_data1 = create_card_data(animal_id1)
 		var card_data2 = create_card_data(animal_id2)
 		
-		# Adicionado verificação para garantir que card_data não seja vazio
 		if not card_data1.is_empty():
 			player1_deck.append(card_data1)
 		else:
@@ -138,8 +158,6 @@ func generate_player_decks():
 			player2_deck.append(card_data2)
 		else:
 			printerr("BattleScene: card_data2 vazio para animal_id: ", animal_id2)
-	
-	print("BattleScene: Decks gerados. Player1 deck size: ", player1_deck.size(), ", Player2 deck size: ", player2_deck.size())
 
 func create_card_data(animal_id: String) -> Dictionary:
 	"""Cria dados de carta baseados no animal"""
@@ -218,13 +236,15 @@ func transition_to_card_selection():
 func show_card_selection_interface():
 	"""Mostra a interface de seleção de cartas"""
 	print("BattleScene: Mostrando interface de seleção de cartas para Jogador ", current_player)
-	var selection_popup = create_card_selection_popup()
-	add_child(selection_popup)
-	selection_popup.popup_centered() # Garantir que o popup seja exibido
-	print("BattleScene: Popup de seleção de cartas criado e exibido")
-
-func create_card_selection_popup() -> Control:
-	"""Cria o popup de seleção de cartas"""
+	var selection_popup = _selection_popup()
+	if selection_popup != null:
+		add_child(selection_popup)
+		selection_popup.popup_centered() # Garantir que o popup seja exibido
+		print("BattleScene: Popup de seleção de cartas criado e exib")
+	else:
+		printerr("BattleScene: Falha ao criar popup de seleção de característica.")
+		
+func _selection_popup() -> AcceptDialog:
 	var popup = AcceptDialog.new()
 	popup.title = "Seleção de Carta - Jogador %d" % current_player
 	popup.size = Vector2(800, 600)
@@ -341,6 +361,8 @@ func process_card_selection(card_data: Dictionary):
 		player1_used_cards.append(card_data)
 		display_player_card(player1_current_card, player1_area)
 		current_player = 2
+		# Aguardar um frame para garantir que o popup anterior seja fechado
+		await get_tree().process_frame
 		show_card_selection_interface()
 	else:
 		player2_current_card = create_card_from_data(card_data)
@@ -378,33 +400,38 @@ func show_characteristic_selection():
 	"""Mostra a seleção de característica para a batalha"""
 	print("BattleScene: Mostrando seleção de característica.")
 	var selection_popup = create_characteristic_selection_popup()
-	add_child(selection_popup)
-	selection_popup.popup_centered()
+	if selection_popup != null:
+		add_child(selection_popup)
+		selection_popup.popup_centered()
+		selection_popup.size = Vector2(400, 300)
+		
+		var vbox = VBoxContainer.new()
+		selection_popup.add_child(vbox)
+		
+		var instruction = Label.new()
+		instruction.text = "Escolha a característica para comparar:"
+		instruction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
+		vbox.add_child(instruction)
+		
+		for characteristic in active_characteristics:
+			var button = Button.new()
+			button.text = CHARACTERISTIC_NAMES[characteristic]
+			button.custom_minimum_size = Vector2(350, 40)
+			button.pressed.connect(func():
+				execute_battle_round(characteristic)
+				selection_popup.queue_free()
+			)
+			vbox.add_child(button)
+		
+		return selection_popup
+	else:
+		printerr("BattleScene: Falha ao criar popup de seleção de característica.")
 
-func create_characteristic_selection_popup() -> Control:
-	"""Cria o popup de seleção de característica"""
+func create_characteristic_selection_popup() -> AcceptDialog:
 	var popup = AcceptDialog.new()
-	popup.title = "Selecione a Característica - Jogador 1"
+	popup.title = "Seleção de Característica"
 	popup.size = Vector2(400, 300)
-	
-	var vbox = VBoxContainer.new()
-	popup.add_child(vbox)
-	
-	var instruction = Label.new()
-	instruction.text = "Escolha a característica para comparar:"
-	instruction.horizontal_alignment = HORIZONTAL_ALIGNMENT_CENTER
-	vbox.add_child(instruction)
-	
-	for characteristic in active_characteristics:
-		var button = Button.new()
-		button.text = CHARACTERISTIC_NAMES[characteristic]
-		button.custom_minimum_size = Vector2(350, 40)
-		button.pressed.connect(func():
-			execute_battle_round(characteristic)
-			popup.queue_free()
-		)
-		vbox.add_child(button)
-	
+	popup.unresizable = false
 	return popup
 
 func execute_battle_round(characteristic: String):
@@ -478,7 +505,7 @@ func show_round_result(characteristic: String, value1: float, value2: float, win
 	)
 
 func process_round_end():
-	"""Processa o fim da rodada"""
+	"Processa o fim da rodada"
 	print("BattleScene: Processando fim da rodada.")
 	current_round += 1
 	update_score_display()
@@ -491,12 +518,12 @@ func process_round_end():
 		reset_for_next_round()
 
 func update_score_display():
-	"""Atualiza a exibição do placar"""
+	"Atualiza a exibição do placar"
 	round_counter.text = "Rodada: %d/%d" % [current_round, max_rounds]
 	score_display.text = "Jogador 1: %d - Jogador 2: %d" % [player1_wins, player2_wins]
 
 func reset_for_next_round():
-	"""Reseta para a próxima rodada"""
+	"Reseta para a próxima rodada"
 	print("BattleScene: Resetando para próxima rodada.")
 	# Limpar cartas atuais
 	if player1_current_card:
@@ -511,7 +538,7 @@ func reset_for_next_round():
 	transition_to_card_selection()
 
 func show_match_result():
-	"""Mostra o resultado final da partida"""
+	"Mostra o resultado final da partida"
 	print("BattleScene: Mostrando resultado final da partida.")
 	current_state = GameState.MATCH_RESULT
 	
@@ -538,13 +565,13 @@ func show_match_result():
 	)
 
 func _on_back_to_menu_pressed():
-	"""Volta para o menu principal"""
+	"Volta para o menu principal"
 	print("BattleScene: Voltando para o menu principal.")
 	get_tree().change_scene_to_file("res://Menu.tscn")
 
 # Função para inicializar com formato específico
 func initialize_battle(format: BattleFormat = BattleFormat.CLASSIC):
-	"""Inicializa a batalha com um formato específico"""
+	"Inicializa a batalha com um formato específico"
 	battle_format = format
 	
 	match format:
@@ -562,7 +589,7 @@ func initialize_battle(format: BattleFormat = BattleFormat.CLASSIC):
 	start_battle_setup()
 
 func generate_draft_pool():
-	"""Gera um pool comum de cartas para o formato draft"""
+	"Gera um pool comum de cartas para o formato draft"
 	var draft_pool = []
 	
 	# Gerar 12 cartas para o draft (6 para cada jogador)

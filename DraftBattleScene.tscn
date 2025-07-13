@@ -1,0 +1,67 @@
+[gd_scene load_steps=2 format=3 uid="uid://bxqm8y7n8xqpd"]
+
+[ext_resource type="Script" path="res://DraftBattleScene.gd" id="1_0hnxd"]
+
+[node name="DraftBattleScene" type="Control"]
+layout_mode = 3
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+script = ExtResource("1_0hnxd")
+
+[node name="DraftInterface" type="VBoxContainer" parent="."]
+layout_mode = 1
+anchors_preset = 15
+anchor_right = 1.0
+anchor_bottom = 1.0
+offset_left = 50.0
+offset_top = 50.0
+offset_right = -50.0
+offset_bottom = -50.0
+
+[node name="TitleLabel" type="Label" parent="DraftInterface"]
+layout_mode = 2
+text = "Modo Draft - Seleção de Cartas"
+horizontal_alignment = 1
+vertical_alignment = 1
+
+[node name="InstructionLabel" type="Label" parent="DraftInterface"]
+layout_mode = 2
+text = "Selecione 6 cartas do pool comum para formar seu deck"
+horizontal_alignment = 1
+
+[node name="PlayerTurnLabel" type="Label" parent="DraftInterface"]
+layout_mode = 2
+text = "Vez do Jogador 1"
+horizontal_alignment = 1
+
+[node name="ScrollContainer" type="ScrollContainer" parent="DraftInterface"]
+layout_mode = 2
+size_flags_vertical = 3
+
+[node name="CardsGrid" type="GridContainer" parent="DraftInterface/ScrollContainer"]
+layout_mode = 2
+columns = 4
+
+[node name="SelectedCardsContainer" type="VBoxContainer" parent="DraftInterface"]
+layout_mode = 2
+
+[node name="SelectedLabel" type="Label" parent="DraftInterface/SelectedCardsContainer"]
+layout_mode = 2
+text = "Cartas Selecionadas: 0/6"
+
+[node name="SelectedCardsDisplay" type="HBoxContainer" parent="DraftInterface/SelectedCardsContainer"]
+layout_mode = 2
+
+[node name="ButtonsContainer" type="HBoxContainer" parent="DraftInterface"]
+layout_mode = 2
+
+[node name="ConfirmSelectionButton" type="Button" parent="DraftInterface/ButtonsContainer"]
+layout_mode = 2
+text = "Confirmar Seleção"
+disabled = true
+
+[node name="BackToMenuButton" type="Button" parent="DraftInterface/ButtonsContainer"]
+layout_mode = 2
+text = "Voltar ao Menu"
+

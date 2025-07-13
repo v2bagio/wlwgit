@@ -133,8 +133,9 @@ func _get_filtered_and_sorted_cards() -> Array:
 	return filtered_cards
 
 func _on_card_inspected(card_data: Dictionary):
+	print("CollectionScene: _on_card_inspected chamado para ", card_data.get("nome_display", "N/A"))
 	if find_child("CardViewer3D", true, false):
-		print("Visualizador já está aberto.")
+		print("CollectionScene: Visualizador já está aberto.")
 		return
 	
 	# Oculta a carta que foi clicada
@@ -149,8 +150,11 @@ func _on_card_inspected(card_data: Dictionary):
 	viewer.tree_exiting.connect(_on_viewer_closed)
 	
 	viewer.set_anchors_and_offsets_preset(Control.PRESET_FULL_RECT)
+	# Removido: viewer.initialize_viewer() # Esta chamada será feita automaticamente pelo _ready do CardViewer3D
+	print("CollectionScene: Visualizador criado e configurado com sucesso!")
 	
 func _on_viewer_opened():
+	print("CollectionScene: Sinal viewer_opened recebido do CardViewer3D.")
 	# Hide and disable the entire grid
 	$ScrollContainer/CardGrid.visible = false
 	$ScrollContainer/CardGrid.process_mode = Node.PROCESS_MODE_DISABLED
@@ -188,12 +192,12 @@ func _process(_delta):
 		
 func _handle_card_click():
 	if is_instance_valid(hovered_card):
-		print("Carta clicada: ", hovered_card.animal_id)
+		print("CollectionScene: Carta clicada: ", hovered_card.animal_id)
 		var card_data = hovered_card.get_card_data()
 		_open_card_viewer(card_data)
 
 func _open_card_viewer(card_data: Dictionary):
-	print("Abrindo visualizador para: ", card_data.get("nome_display", "Desconhecido"))
+	print("CollectionScene: Abrindo visualizador para: ", card_data.get("nome_display", "Desconhecido"))
 	
 	var existing_viewer = find_child("CardViewer3D", true, false)
 	if existing_viewer:
@@ -208,8 +212,8 @@ func _open_card_viewer(card_data: Dictionary):
 	viewer.card_data = card_data
 	viewer.tree_exiting.connect(_on_viewer_closed)
 	add_child(viewer)
-	
-	print("Visualizador criado com sucesso!")
+	# Removido: viewer.initialize_viewer() # Esta chamada será feita automaticamente pelo _ready do CardViewer3D
+	print("CollectionScene: Visualizador criado com sucesso!")
 
 func _gui_input(event):
 	if event is InputEventMouseButton and event.button_index == MOUSE_BUTTON_LEFT and event.is_pressed():
@@ -219,10 +223,10 @@ func _gui_input(event):
 				# Emitir o sinal diretamente
 				_on_card_inspected(card_data)
 			else:
-				printerr("Dados da carta inválidos para: ", currently_hovered_card)
+				printerr("CollectionScene: Dados da carta inválidos para: ", currently_hovered_card)
 	
 func _on_viewer_closed():
-	print("Visualizador fechado - CollectionScene restaurada")
+	print("CollectionScene: Visualizador fechado - CollectionScene restaurada")
 	# Mostrar a CollectionScene novamente
 	visible = true
 	

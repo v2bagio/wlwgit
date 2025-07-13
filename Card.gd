@@ -78,7 +78,7 @@ func _ready():
 func setup(p_animal_id: String, p_is_full_art: bool = false, p_is_hollow: bool = false, p_use_alt_art: bool = false):
 	stored_card_data = AnimalDatabase.get_animal_data(p_animal_id)
 	if stored_card_data.is_empty(): 
-		printerr("Dados do animal não encontrados para ID: ", p_animal_id)
+		printerr("Card.gd: Dados do animal não encontrados para ID: ", p_animal_id)
 		return
 
 	self.animal_id = p_animal_id
@@ -146,7 +146,9 @@ func display_card_data(card_data: Dictionary):
 	self.peso = card_data.get("peso", 0.0)
 
 	nome_label.text = card_data.get("nome_display", "N/A")
+	
 	foto_animal.texture = _load_texture_safely(self.imagem_path)
+	
 	card_background.texture = _load_texture_safely(self.background_path)
 
 	(poderes_box.get_child(0) as Label).text = "Altura: %.2f m" % card_data.get("altura", 0.0)
@@ -184,28 +186,27 @@ func get_card_data() -> Dictionary:
 		"description": description
 	}
 	if data_card.get("animal_id", "").is_empty():
-		printerr("Dados da carta incompletos para: ", self.name)
+		printerr("Card.gd: Dados da carta incompletos para: ", self.name)
 	
 	return data_card
 
 func _load_texture_safely(path: String) -> Texture2D:
 	if path.is_empty():
+		printerr("Card.gd: Caminho da textura vazio.")
 		return null
 	if ResourceLoader.exists(path):
 		var resource = ResourceLoader.load(path)
 		if resource is Texture2D:
 			return resource
 		else:
-			printerr("Recurso no caminho \'", path, "\' não é uma Texture2D.")
 			return null
 	if FileAccess.file_exists(path):
 		var image = Image.load_from_file(path)
 		if image:
 			return ImageTexture.create_from_image(image)
 		else:
-			printerr("Arquivo em \'", path, "\' existe, mas não pôde ser carregado como Imagem.")
 			return null
-	printerr("Falha ao carregar textura. Caminho não encontrado: \'", path, "\' ")
+	printerr("Card.gd: Falha ao carregar textura. Caminho não encontrado: \'", path, "\' ")
 	return null
 
 func enable_flip(enabled: bool):

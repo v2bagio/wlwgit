@@ -248,7 +248,6 @@ func update_button_states():
 	var max_reached = selected_bans.size() >= max_bans_per_player
 	
 	for button_data in characteristic_buttons:
-		@warning_ignore("unused_variable")
 		var characteristic = button_data.characteristic
 		var button = button_data.button
 		
@@ -363,18 +362,6 @@ func create_results_popup() -> AcceptDialog:
 	
 	# Conectar o sinal de confirmação
 	popup.confirmed.connect(_on_results_popup_confirmed)
-	
-	# Adicionar um timer para auto-fechar se necessário (corrigido)
-	var timer = Timer.new()
-	timer.wait_time = 10.0  # 10 segundos
-	timer.one_shot = true
-	popup.add_child(timer)  # Adicionar à árvore ANTES de conectar e iniciar
-	timer.timeout.connect(func():
-		print("CharacteristicBanSystem: Auto-fechando popup por timeout")
-		_on_results_popup_confirmed()
-		popup.queue_free()
-	)
-	timer.start()
 	
 	return popup
 

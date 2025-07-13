@@ -59,6 +59,7 @@ alignment = 1
 [node name="Player1Area" type="VBoxContainer" parent="PlayerAreas"]
 layout_mode = 2
 size_flags_horizontal = 3
+alignment = 1
 
 [node name="PlayerName" type="Label" parent="PlayerAreas/Player1Area"]
 layout_mode = 2
@@ -68,7 +69,6 @@ horizontal_alignment = 1
 [node name="CardSlot" type="Control" parent="PlayerAreas/Player1Area"]
 custom_minimum_size = Vector2(190, 280)
 layout_mode = 2
-size_flags_horizontal = 4
 size_flags_vertical = 3
 
 [node name="CardSlotBorder" type="NinePatchRect" parent="PlayerAreas/Player1Area/CardSlot"]
@@ -78,6 +78,7 @@ anchor_right = 1.0
 anchor_bottom = 1.0
 grow_horizontal = 2
 grow_vertical = 2
+region_rect = Rect2(407.444, 189.457, 0.19754, 0.197525)
 
 [node name="VSLabel" type="Label" parent="PlayerAreas"]
 layout_mode = 2
@@ -88,6 +89,7 @@ vertical_alignment = 1
 [node name="Player2Area" type="VBoxContainer" parent="PlayerAreas"]
 layout_mode = 2
 size_flags_horizontal = 3
+alignment = 1
 
 [node name="PlayerName" type="Label" parent="PlayerAreas/Player2Area"]
 layout_mode = 2
