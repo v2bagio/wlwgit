@@ -147,11 +147,10 @@ func display_card_data(card_data: Dictionary):
 
 	nome_label.text = card_data.get("nome_display", "N/A")
 	
-	# Carregar texturas de forma síncrona
 	foto_animal.texture = _load_texture_safely(self.imagem_path)
+	
 	card_background.texture = _load_texture_safely(self.background_path)
 
-	# Atualizar os labels de poderes
 	(poderes_box.get_child(0) as Label).text = "Altura: %.2f m" % card_data.get("altura", 0.0)
 	(poderes_box.get_child(1) as Label).text = "Comprimento: %.2f m" % card_data.get("comprimento", 0.0)
 	(poderes_box.get_child(2) as Label).text = "Velocidade: %.2f km/h" % card_data.get("velocidade", 0.0)
@@ -162,12 +161,11 @@ func display_card_data(card_data: Dictionary):
 	_apply_rarity_gem_color(self.raridade)
 	apply_visual_treatments()
 
-	# Certificar-se de que a visibilidade está correta após a atualização dos dados
-	update_visibility()
+	_set_status_dot_color(card_data.get("iucn_status", ""))
+	_set_frame_color(bioma)
+	_apply_rarity_gem_color(raridade)
+	apply_visual_treatments()
 	
-	# Emitir o sinal fully_drawn após todos os elementos visuais serem atualizados
-	emit_signal("fully_drawn")
-
 func get_card_data() -> Dictionary:
 	var data_card = {
 		"unique_id": unique_id,
@@ -208,7 +206,7 @@ func _load_texture_safely(path: String) -> Texture2D:
 			return ImageTexture.create_from_image(image)
 		else:
 			return null
-	printerr("Card.gd: Falha ao carregar textura. Caminho não encontrado: \"", path, "\" ")
+	printerr("Card.gd: Falha ao carregar textura. Caminho não encontrado: \'", path, "\' ")
 	return null
 
 func enable_flip(enabled: bool):

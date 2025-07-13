@@ -25,7 +25,7 @@ const DB = {
 			{"path": "res://assets/normal/capivara.jpg", "artist": "Artista A", "is_alt": false},
 			{"path": "res://assets/normal/capivara_v2.jpg", "artist": "Artista B", "is_alt": false}
 		],
-		"population": 20000,
+		"population": 50000,
 		"altura":      { "min": 0.5, "max": 0.65, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 1.0, "max": 1.4,  "unidade": "m", "archetype": "HIGH" },
 		"velocidade":  { "min": 30.0,"max": 40.0, "unidade": "km/h", "archetype": "HIGH" },
@@ -39,7 +39,7 @@ const DB = {
 			{"path": "res://assets/normal/onca_pintada.png", "artist": "Artista C", "is_alt": false},
 			{"path": "res://assets/alternate/onca_pintada_alt.png", "artist": "Artista D (Arte Alt.)", "is_alt": true}
 		],
-		"population": 20000,
+		"population": 5000,
 		"altura":      { "min": 0.8, "max": 0.95, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 1.5, "max": 1.9, "unidade": "m", "archetype": "HIGH" },
 		"velocidade":  { "min": 70.0, "max": 85.0, "unidade": "km/h", "archetype": "HIGH" },
@@ -52,7 +52,7 @@ const DB = {
 		"artes": [
 			{"path": "res://assets/normal/mico_leao_dourado.jpg", "artist": "Artista E", "is_alt": false}
 		],
-		"population": 20000,
+		"population": 1000,
 		"altura":      { "min": 0.25,"max": 0.35, "unidade": "m", "archetype": "LOW" },
 		"comprimento": { "min": 0.15,"max": 0.25, "unidade": "m", "archetype": "LOW" },
 		"velocidade":  { "min": 35.0,"max": 45.0, "unidade": "km/h", "archetype": "HIGH" },
@@ -65,7 +65,7 @@ const DB = {
 		"artes": [
 			{"path": "res://assets/normal/tucano.jpg", "artist": "Artista F", "is_alt": false}
 		],
-		"population": 20000,
+		"population": 50000,
 		"altura":      { "min": 0.45, "max": 0.55, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 0.5, "max": 0.65, "unidade": "m", "archetype": "HIGH" },
 		"velocidade":  { "min": 45.0, "max": 55.0, "unidade": "km/h", "archetype": "HIGH" },
