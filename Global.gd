@@ -176,4 +176,3 @@ func get_system_info() -> Dictionary:
 		"total_cards": total_cards_collected,
 		"win_rate": get_win_rate()
 	}
-

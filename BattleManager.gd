@@ -220,4 +220,3 @@ class ArenaBattleRules:
 	const RANKING_SYSTEM = true
 	const SEASONAL_REWARDS = true
 	const DECK_SIZE = 10
-
