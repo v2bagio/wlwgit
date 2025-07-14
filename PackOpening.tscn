@@ -1,7 +1,7 @@
 [gd_scene load_steps=3 format=3 uid="uid://dvikflbg4fy34"]
 
 [ext_resource type="Script" uid="uid://bnv7gua8k86lp" path="res://PackOpening.gd" id="1_cvw7c"]
-[ext_resource type="Texture2D" uid="uid://b0lfc2at6nofd" path="res://assets/ui/card_back.png" id="2_nsiks"]
+[ext_resource type="Texture2D" uid="uid://b0ujpa2hcipwb" path="res://assets/ui/card_back.png" id="2_nsiks"]
 
 [node name="PackOpeningScene" type="Control"]
 layout_mode = 3

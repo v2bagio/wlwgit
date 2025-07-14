@@ -5,6 +5,7 @@ signal viewer_opened
 
 @onready var sub_viewport = $ViewportContainer/SubViewport
 @onready var card_mesh = $ViewportContainer/SubViewport/CardMesh
+@onready var card_mesh2 = $ViewportContainer/SubViewport/CardMesh2
 @onready var camera = $ViewportContainer/SubViewport/Camera3D
 @onready var title_label = $MarginContainer/VBoxContainer/TitleLabel
 @onready var description_label = $MarginContainer/VBoxContainer/DescriptionLabel
@@ -26,6 +27,14 @@ var card_data: Dictionary = {}
 var front_texture: Texture2D
 
 func _ready():
+	#var material_front = StandardMaterial3D.new()
+	#var material_back = StandardMaterial3D.new()
+	#var texture_front = load("res://assets/normal/capivara1.jpg") as Texture2D
+	#var texture_back = load("res://assets/ui/card_back.png") as Texture2D
+	#material_front.albedo_texture = texture_front
+	#material_back.albedo_texture = texture_back
+	#$ViewportContainer/SubViewport/CardMesh2.set_surface_override_material(1, material_front)
+	#$ViewportContainer/SubViewport/CardMesh2.set_surface_override_material(0, material_back)
 	# Freeze the game and hide all cards
 	get_tree().paused = true
 	for card in get_tree().get_nodes_in_group("cards"):
@@ -55,9 +64,12 @@ func _process(delta):
 	
 	if rotating_automatically:
 		card_mesh.rotation.y += rotation_speed * delta * 0.5
+		card_mesh2.rotation.y += rotation_speed * delta * 0.5
 	else:
 		var target_rot = Vector3(deg_to_rad(-user_rotation.y), deg_to_rad(user_rotation.x), 0)
 		card_mesh.rotation = card_mesh.rotation.lerp(target_rot, delta * 10.0)
+		card_mesh2.rotation = card_mesh2.rotation.lerp(target_rot, delta * 10.0)
+
 	
 func initialize_viewer():
 	print("Inicializando visualizador com dados: ", card_data)
@@ -70,6 +82,17 @@ func initialize_viewer():
 
 func setup_card(bcard_data: Dictionary):
 	print("Configurando carta: ", bcard_data.get("nome_display", "Desconhecido"))
+	var material_front = StandardMaterial3D.new()
+	var material_back = StandardMaterial3D.new()
+	var texture_front = load(bcard_data.get("imagem_path", "Path Inválido para a Imagem (frente)")) as Texture2D
+	#var texture_front = load("res://assets/ui/armadeira.png") as Texture2D
+	material_front.uv1_scale = Vector3(-1, 1, 1)
+	print("TEXTURAAAAAAAAAAAAAAAAAA", bcard_data.get("imagem_path", "Path Inválido para a Imagem (frente)"))
+	var texture_back = load("res://assets/ui/card_back.png") as Texture2D
+	material_front.albedo_texture = texture_front
+	material_back.albedo_texture = texture_back
+	$ViewportContainer/SubViewport/CardMesh2.set_surface_override_material(1, material_front)
+	$ViewportContainer/SubViewport/CardMesh2.set_surface_override_material(0, material_back)
 	title_label.text = bcard_data.get("nome_display", "Nome Indisponível")
 	description_label.text = bcard_data.get("description", "Descrição não disponível.")
 	artist_label.text = "Arte por: " + bcard_data.get("artist", "Desconhecido")
@@ -88,6 +111,9 @@ func setup_card(bcard_data: Dictionary):
 
 	card_mesh.rotation_degrees = Vector3(-15, 0, 0)
 	card_mesh.position = Vector3(0, 0, 0)
+	rotating_automatically = true
+	card_mesh2.rotation_degrees = Vector3(-15, 0, 0)
+	card_mesh2.position = Vector3(0, 0, 0)
 	rotating_automatically = true
 
 func _render_card_to_texture(data: Dictionary) -> Texture2D:
