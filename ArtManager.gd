@@ -16,7 +16,7 @@ func load_all_art():
 	art_library.clear()
 	
 	_discover_base_art()
-	_discover_player_art()
+	#_discover_player_art()
 	
 	print("--- Descoberta de artes concluída. Biblioteca final: ---")
 	print(art_library)
@@ -26,23 +26,23 @@ func _discover_base_art():
 	_scan_art_folder("res://assets/normal/", "Artista Base", false)
 	_scan_art_folder("res://assets/alternate/", "Artista Base", true)
 
-func _discover_player_art():
-	print("-> A procurar por artes da comunidade em user://player_data...")
-	var player_data_dir = "user://player_data/"
-	var dir = DirAccess.open(player_data_dir)
-	
-	if not dir:
-		DirAccess.make_dir_absolute(player_data_dir)
-		return
-
-	dir.list_dir_begin()
-	var player_id = dir.get_next()
-	while player_id != "":
-		if dir.current_is_dir() and player_id != "." and player_id != "..":
-			var artist_name = _get_player_artist_name(player_id)
-			_scan_art_folder("%s%s/arts/normal/" % [player_data_dir, player_id], artist_name, false)
-			_scan_art_folder("%s%s/arts/alternate/" % [player_data_dir, player_id], artist_name, true)
-		player_id = dir.get_next()
+#func _discover_player_art():
+	#print("-> A procurar por artes da comunidade em user://player_data...")
+	#var player_data_dir = "user://player_data/"
+	#var dir = DirAccess.open(player_data_dir)
+	#
+	#if not dir:
+		#DirAccess.make_dir_absolute(player_data_dir)
+		#return
+#
+	#dir.list_dir_begin()
+	#var player_id = dir.get_next()
+	#while player_id != "":
+		#if dir.current_is_dir() and player_id != "." and player_id != "..":
+			#var artist_name = _get_player_artist_name(player_id)
+			#_scan_art_folder("%s%s/arts/normal/" % [player_data_dir, player_id], artist_name, false)
+			#_scan_art_folder("%s%s/arts/alternate/" % [player_data_dir, player_id], artist_name, true)
+		#player_id = dir.get_next()
 
 # --- FUNÇÃO DE DESCOBERTA MELHORADA PARA MÚLTIPLOS TIPOS E SUFIXOS ---
 func _scan_art_folder(folder_path: String, artist_name: String, is_alt: bool):
@@ -75,12 +75,12 @@ func _scan_art_folder(folder_path: String, artist_name: String, is_alt: bool):
 		file_name = dir.get_next()
 
 func _match_file_to_animal(file_name: String, animal_ids: Array) -> String:
-	"""
+	"
 	Verifica se um arquivo corresponde a um animal, considerando:
 	- Múltiplas extensões (.png, .jpg, .jpeg)
 	- Sufixos numéricos (ex: lobo_guara1.png, lobo_guara2.jpg)
 	- Sufixos de versão (ex: lobo_guara_v2.png)
-	"""
+	"
 	
 	# Verificar se o arquivo tem uma extensão suportada
 	var has_supported_extension = false
@@ -103,7 +103,7 @@ func _match_file_to_animal(file_name: String, animal_ids: Array) -> String:
 	return ""
 
 func _is_file_match_for_animal(file_base: String, animal_id: String) -> bool:
-	"""
+	"
 	Verifica se um nome de arquivo (sem extensão) corresponde a um animal específico.
 	Considera padrões como:
 	- lobo_guara.png
@@ -111,7 +111,7 @@ func _is_file_match_for_animal(file_base: String, animal_id: String) -> bool:
 	- lobo_guara2.jpeg
 	- lobo_guara_v2.png
 	- lobo_guara_alt.png
-	"""
+	"
 	
 	var animal_id_lower = animal_id.to_lower()
 	
@@ -189,29 +189,29 @@ func get_random_art(animal_id: String, is_alt: bool) -> Dictionary:
 		printerr("ArtManager: Nenhuma arte encontrada para o animal '%s'." % animal_id)
 		return {"path": "", "artist": "Desconhecido"}
 
+	var fallback_arts = art_library[animal_id].filter(func(art): return art.is_alt != is_alt)
+	if not fallback_arts.is_empty():
+		print("ArtManager: Arte do tipo %s não encontrada para '%s'. Usando fallback." % [is_alt, animal_id])
+		return fallback_arts.pick_random()
+		
 	var possible_arts = art_library[animal_id].filter(func(art): return art.is_alt == is_alt)
 	
 	if not possible_arts.is_empty():
 		var selected_art = possible_arts.pick_random()
 		print("ArtManager: Arte selecionada para %s (alt=%s): %s" % [animal_id, is_alt, selected_art.path])
 		return selected_art
-
-	var fallback_arts = art_library[animal_id].filter(func(art): return art.is_alt != is_alt)
-	if not fallback_arts.is_empty():
-		print("ArtManager: Arte do tipo %s não encontrada para '%s'. Usando fallback." % [is_alt, animal_id])
-		return fallback_arts.pick_random()
-		
+	
 	printerr("ArtManager: Nenhuma arte de nenhum tipo encontrada para '%s'." % animal_id)
 	return {"path": "", "artist": "Desconhecido"}
 
 func get_all_available_arts(animal_id: String) -> Array:
-	"""Retorna todas as artes disponíveis para um animal específico"""
+	"Retorna todas as artes disponíveis para um animal específico"
 	if not art_library.has(animal_id):
 		return []
 	return art_library[animal_id]
 
 func get_art_count(animal_id: String, is_alt: bool = false) -> int:
-	"""Retorna o número de artes disponíveis para um animal"""
+	"Retorna o número de artes disponíveis para um animal"
 	if not art_library.has(animal_id):
 		return 0
 	
@@ -228,42 +228,42 @@ func get_all_alt_art_animals() -> Array:
 				break
 	return alt_art_animals
 
-func save_player_art(player_id: String, image_data: PackedByteArray, is_alt: bool = false):
-	# Criar diretório se não existir
-	var dir_path = "user://player_data/%s/arts/%s/" % [player_id, "alternate" if is_alt else "normal"]
-	DirAccess.make_dir_recursive_absolute(dir_path)
-	
-	# Gerar nome de arquivo único
-	var file_name = "art_%s.png" % Time.get_datetime_string_from_system().replace(":", "-")
-	var full_path = dir_path + file_name
-	
-	# Salvar imagem
-	var image = Image.new()
-	var error = image.load_png_from_buffer(image_data)
-	if error == OK:
-		image.save_png(full_path)
-		# Atualizar biblioteca
-		_register_player_art(player_id, full_path, is_alt)
-		return full_path
-	else:
-		printerr("Erro ao salvar arte do jogador: ", error)
-		return ""
+#func save_player_art(player_id: String, image_data: PackedByteArray, is_alt: bool = false):
+	## Criar diretório se não existir
+	#var dir_path = "user://player_data/%s/arts/%s/" % [player_id, "alternate" if is_alt else "normal"]
+	#DirAccess.make_dir_recursive_absolute(dir_path)
+	#
+	## Gerar nome de arquivo único
+	#var file_name = "art_%s.png" % Time.get_datetime_string_from_system().replace(":", "-")
+	#var full_path = dir_path + file_name
+	#
+	## Salvar imagem
+	#var image = Image.new()
+	#var error = image.load_png_from_buffer(image_data)
+	#if error == OK:
+		#image.save_png(full_path)
+		## Atualizar biblioteca
+		#_register_player_art(player_id, full_path, is_alt)
+		#return full_path
+	#else:
+		#printerr("Erro ao salvar arte do jogador: ", error)
+		#return ""
 
-func _register_player_art(player_id: String, path: String, is_alt: bool):
-	var animal_id = _extract_animal_id_from_path(path)
-	if animal_id.is_empty():
-		printerr("Não foi possível identificar animal ID no caminho: ", path)
-		return
-	
-	if not art_library.has(animal_id):
-		art_library[animal_id] = []
-	
-	art_library[animal_id].append({
-		"path": path,
-		"artist": "Jogador: %s" % player_id,
-		"is_alt": is_alt
-	})
-	print("Arte registrada para ", animal_id, " por ", player_id)
+#func _register_player_art(player_id: String, path: String, is_alt: bool):
+	#var animal_id = _extract_animal_id_from_path(path)
+	#if animal_id.is_empty():
+		#printerr("Não foi possível identificar animal ID no caminho: ", path)
+		#return
+	#
+	#if not art_library.has(animal_id):
+		#art_library[animal_id] = []
+	#
+	#art_library[animal_id].append({
+		#"path": path,
+		#"artist": "Jogador: %s" % player_id,
+		#"is_alt": is_alt
+	#})
+	#print("Arte registrada para ", animal_id, " por ", player_id)
 
 func _extract_animal_id_from_path(path: String) -> String:
 	var file_name = path.get_file().get_basename()
@@ -280,7 +280,7 @@ func _extract_animal_id_from_path(path: String) -> String:
 
 # --- FUNÇÕES DE DIAGNÓSTICO ---
 func print_art_library():
-	"""Função de debug para imprimir toda a biblioteca de arte"""
+	"Função de debug para imprimir toda a biblioteca de arte"
 	print("=== BIBLIOTECA DE ARTE ===")
 	for animal_id in art_library.keys():
 		print("Animal: %s" % animal_id)

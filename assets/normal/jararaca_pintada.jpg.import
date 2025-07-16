@@ -2,16 +2,16 @@
 
 importer="texture"
 type="CompressedTexture2D"
-uid="uid://dcdd3s0u2fo1w"
-path="res://.godot/imported/cervo_do_pantanal.jpg-14467dc5c56ef5668bd93fe5c3c93c3f.ctex"
+uid="uid://c2syxml315a6t"
+path="res://.godot/imported/jararaca_pintada.jpg-6bf2cc51dda8bad3a93aadea75efc8e8.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/cervo_do_pantanal.jpg"
-dest_files=["res://.godot/imported/cervo_do_pantanal.jpg-14467dc5c56ef5668bd93fe5c3c93c3f.ctex"]
+source_file="res://assets/normal/jararaca_pintada.jpg"
+dest_files=["res://.godot/imported/jararaca_pintada.jpg-6bf2cc51dda8bad3a93aadea75efc8e8.ctex"]
 
 [params]
 

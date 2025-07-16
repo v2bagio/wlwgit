@@ -6,10 +6,10 @@ signal card_clicked(card_data)
 
 signal fully_drawn
 
+var animal_id: String
 var iucn_status: String
 var bioma: String
 var unique_id: String
-var animal_id: String
 var altura: float
 var comprimento: float
 var velocidade: float
@@ -39,7 +39,7 @@ var is_locked = false
 @onready var foto_frame = $CardFace/FotoFrame
 @onready var foto_animal = $CardFace/FotoFrame/FotoAnimal
 @onready var status_dot = $CardFace/FotoFrame/FotoAnimal/StatusDot
-@onready var poderes_box = $CardFace/PoderesBox
+@onready var poderes_box = $CardFace/PanelContainer/PoderesBox
 
 const CORES_IUCN = {"LC": Color.GREEN, "NT": Color.YELLOW, "EN": Color.ORANGE_RED}
 const CORES_BIOMA = {"Floresta": Color.DARK_GREEN, "Pantanoso": Color.SADDLE_BROWN, "Mata Atlântica": Color.FOREST_GREEN, "Cerrado": Color.DARK_ORANGE, "Caatinga": Color.GOLDENROD, "Pampa": Color.PALE_GREEN, "Amazônia": Color.DARK_GREEN}

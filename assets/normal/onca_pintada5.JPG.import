@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://yhw5j0oke0v1"
-path="res://.godot/imported/onca_pintada5.JPG-505976ce7e08296905e65d5129a35d68.ctex"
+path="res://.godot/imported/onca_pintada5.jpg-8a73cc74acfd911f681152b449736204.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/onca_pintada5.JPG"
-dest_files=["res://.godot/imported/onca_pintada5.JPG-505976ce7e08296905e65d5129a35d68.ctex"]
+source_file="res://assets/normal/onca_pintada5.jpg"
+dest_files=["res://.godot/imported/onca_pintada5.jpg-8a73cc74acfd911f681152b449736204.ctex"]
 
 [params]
 

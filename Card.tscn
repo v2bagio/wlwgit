@@ -1,4 +1,4 @@
-[gd_scene load_steps=9 format=3 uid="uid://b2hxa3rtgf8ax"]
+[gd_scene load_steps=10 format=3 uid="uid://b2hxa3rtgf8ax"]
 
 [ext_resource type="Script" uid="uid://ch17a6uw0t4eh" path="res://Card.gd" id="1_o8dmi"]
 
@@ -52,6 +52,18 @@ border_width_left = 5
 border_width_top = 5
 border_width_right = 5
 border_width_bottom = 5
+border_blend = true
+corner_radius_top_left = 5
+corner_radius_top_right = 5
+corner_radius_bottom_right = 5
+corner_radius_bottom_left = 5
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_w7jam"]
+bg_color = Color(0.600631, 0.598684, 0.607383, 0.713726)
+border_width_left = 3
+border_width_top = 3
+border_width_right = 3
+border_width_bottom = 3
 border_blend = true
 corner_radius_top_left = 5
 corner_radius_top_right = 5
@@ -186,22 +198,26 @@ clip_contents = true
 custom_minimum_size = Vector2(0, 20)
 layout_mode = 2
 
-[node name="PoderesBox" type="VBoxContainer" parent="CardFace"]
+[node name="PanelContainer" type="PanelContainer" parent="CardFace"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_w7jam")
+
+[node name="PoderesBox" type="VBoxContainer" parent="CardFace/PanelContainer"]
 layout_mode = 2
 
-[node name="LabelA" type="Label" parent="CardFace/PoderesBox"]
-layout_mode = 2
-size_flags_horizontal = 5
-
-[node name="LabelC" type="Label" parent="CardFace/PoderesBox"]
-layout_mode = 2
-size_flags_horizontal = 5
-
-[node name="LabelP" type="Label" parent="CardFace/PoderesBox"]
+[node name="LabelA" type="Label" parent="CardFace/PanelContainer/PoderesBox"]
 layout_mode = 2
 size_flags_horizontal = 5
 
-[node name="LabelV" type="Label" parent="CardFace/PoderesBox"]
+[node name="LabelC" type="Label" parent="CardFace/PanelContainer/PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="LabelP" type="Label" parent="CardFace/PanelContainer/PoderesBox"]
+layout_mode = 2
+size_flags_horizontal = 5
+
+[node name="LabelV" type="Label" parent="CardFace/PanelContainer/PoderesBox"]
 layout_mode = 2
 size_flags_horizontal = 5
 

@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://577d473habha"
-path="res://.godot/imported/ariranha.JPG-d66bd77ee93d90e364fbbebc9688b655.ctex"
+path="res://.godot/imported/ariranha.jpg-478561a296d6f1f081be242ed768b039.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/ariranha.JPG"
-dest_files=["res://.godot/imported/ariranha.JPG-d66bd77ee93d90e364fbbebc9688b655.ctex"]
+source_file="res://assets/normal/ariranha.jpg"
+dest_files=["res://.godot/imported/ariranha.jpg-478561a296d6f1f081be242ed768b039.ctex"]
 
 [params]
 

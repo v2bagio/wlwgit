@@ -74,7 +74,7 @@ const DB = {
 	"lobo_guara": {
 		"nome_display": "Lobo-Guará",
 		"iucn_status": "NT",
-		"bioma": ["Cerrado", "Pantanal", "Pampas"],
+		"bioma": ["Cerrado", "Pantanal", "Pampa"],
 		"descricao": "O maior canídeo da América do Sul, conhecido por suas pernas longas e finas e uma dieta onívora, com destaque para o 'fruto-do-lobo'.",
 		"artes": [
 			{"path": "res://assets/normal/lobo_guara.jpeg", "artist": "Artista A", "is_alt": false}
@@ -100,7 +100,7 @@ const DB = {
 		"peso": { "min": 22.0, "max": 32.0, "unidade": "kg", "archetype": "MEDIUM" }
 	},
 	"boa_constrictor": {
-		"nome_display": "Jiboia (Boa constrictor)",
+		"nome_display": "Boa constrictor",
 		"iucn_status": "LC",
 		"bioma": ["Amazônia", "Cerrado", "Mata Atlântica", "Caatinga"],
 		"descricao": "Serpente não peçonhenta que mata suas presas por constrição. Possui padrões de cores que a ajudam na camuflagem.",
@@ -116,7 +116,7 @@ const DB = {
 	"carcara": {
 		"nome_display": "Carcará",
 		"iucn_status": "LC",
-		"bioma": ["Cerrado", "Caatinga", "Pampas", "Pantanal"],
+		"bioma": ["Cerrado", "Caatinga", "Pampa", "Pantanal"],
 		"descricao": "Ave de rapina oportunista, conhecida por sua inteligência e por se alimentar de uma grande variedade de presas, incluindo carniça.",
 		"artes": [
 			{"path": "res://assets/normal/carcara.jpg", "artist": "Artista D", "is_alt": false}
@@ -128,9 +128,9 @@ const DB = {
 		"peso": { "min": 0.8, "max": 1.4, "unidade": "kg", "archetype": "LOW" }
 	},
 	"cchinga": {
-		"nome_display": "Cangambá (Conepatus chinga)",
+		"nome_display": "Conepatus chinga",
 		"iucn_status": "LC",
-		"bioma": ["Pampas", "Cerrado"],
+		"bioma": ["Pampa", "Cerrado"],
 		"descricao": "Um tipo de gambá conhecido por sua capacidade de ejetar um líquido de odor forte e desagradável como mecanismo de defesa.",
 		"artes": [
 			{"path": "res://assets/normal/cchinga.jpg", "artist": "Artista E", "is_alt": false}
@@ -156,7 +156,7 @@ const DB = {
 		"peso": { "min": 100.0, "max": 150.0, "unidade": "kg", "archetype": "HIGH" }
 	},
 	"cyacare": {
-		"nome_display": "Jacaré-do-Pantanal (Cayman yacare)",
+		"nome_display": "Cayman yacare",
 		"iucn_status": "LC",
 		"bioma": ["Pantanal", "Amazônia"],
 		"descricao": "Um jacaré de porte médio, abundante no Pantanal. Desempenha um papel crucial no ecossistema como predador e na ciclagem de nutrientes.",
@@ -172,7 +172,7 @@ const DB = {
 	"gaviao_caboclo": {
 		"nome_display": "Gavião-Caboclo",
 		"iucn_status": "LC",
-		"bioma": ["Cerrado", "Mata Atlântica", "Pampas"],
+		"bioma": ["Cerrado", "Mata Atlântica", "Pampa"],
 		"descricao": "Gavião de porte médio com cauda branca distintiva. É frequentemente visto em áreas abertas e campos, caçando pequenos animais.",
 		"artes": [
 			{"path": "res://assets/normal/gaviao_caboclo.jpg", "artist": "Artista I", "is_alt": false}
@@ -200,7 +200,7 @@ const DB = {
 	"gralha_do_campo": {
 		"nome_display": "Gralha-do-Campo",
 		"iucn_status": "LC",
-		"bioma": ["Cerrado", "Pampas"],
+		"bioma": ["Cerrado", "Pampa"],
 		"descricao": "Ave barulhenta e social que vive em bandos. Possui uma crista distinta e plumagem predominantemente branca e preta.",
 		"artes": [
 			{"path": "res://assets/normal/gralha_campo.jpg", "artist": "Artista K", "is_alt": false}
@@ -212,7 +212,7 @@ const DB = {
 		"peso": { "min": 0.15, "max": 0.17, "unidade": "kg", "archetype": "LOW" }
 	},
 	"epicrates_crassus": {
-		"nome_display": "Salamanta (Epicrates crassus)",
+		"nome_display": "Epicrates crassus",
 		"iucn_status": "LC",
 		"bioma": ["Cerrado", "Caatinga", "Mata Atlântica"],
 		"descricao": "Conhecida como jiboia-arco-íris, esta serpente exibe um brilho iridescente em suas escamas sob a luz. É de hábito noturno e terrestre.",
@@ -240,9 +240,9 @@ const DB = {
 		"peso": { "min": 0.35, "max": 0.45, "unidade": "kg", "archetype": "LOW" }
 	},
 	"puma": {
-		"nome_display": "Puma (Puma concolor)",
+		"nome_display": "Puma concolor",
 		"iucn_status": "LC",
-		"bioma": ["Amazônia", "Cerrado", "Mata Atlântica", "Pantanal", "Pampas", "Caatinga"],
+		"bioma": ["Amazônia", "Cerrado", "Mata Atlântica", "Pantanal", "Pampa", "Caatinga"],
 		"descricao": "Também conhecida como onça-parda, é o segundo maior felino das Américas. É um predador versátil e solitário, com grande capacidade de adaptação.",
 		"artes": [
 			{"path": "res://assets/normal/puma.jpg", "artist": "Artista N", "is_alt": false}
@@ -259,7 +259,6 @@ const DB = {
 		"bioma": ["Pantanal"],
 		"descricao": "Considerada a ave-símbolo do Pantanal, é a maior cegonha do continente. Constrói ninhos enormes no topo das árvores.",
 		"artes": [
-			{"path": "res://assets/normal/tuiuiu.jpg", "artist": "Artista O", "is_alt": false}
 		],
 		"population": 25000,
 		"altura": { "min": 1.4, "max": 1.6, "unidade": "m", "archetype": "HIGH" },
@@ -268,12 +267,11 @@ const DB = {
 		"peso": { "min": 5.0, "max": 8.0, "unidade": "kg", "archetype": "LOW" }
 	},
 	"lycalopex_gymnocercus": {
-		"nome_display": "Graxaim-do-Campo (Lycalopex gymnocercus)",
+		"nome_display": "Graxaim-do-Campo",
 		"iucn_status": "LC",
-		"bioma": ["Pampas", "Cerrado"],
+		"bioma": ["Pampa", "Cerrado"],
 		"descricao": "Uma raposa sul-americana de hábitos noturnos e onívoros. É adaptável e pode ser encontrada em campos, matas e áreas rurais.",
 		"artes": [
-			{"path": "res://assets/normal/lycalopex.jpg", "artist": "Artista P", "is_alt": false}
 		],
 		"population": 100000,
 		"altura": { "min": 0.4, "max": 0.45, "unidade": "m", "archetype": "LOW" },
@@ -282,12 +280,11 @@ const DB = {
 		"peso": { "min": 4.0, "max": 6.5, "unidade": "kg", "archetype": "LOW" }
 	},
 	"jararaca_pintada": {
-		"nome_display": "Jararaca-Pintada (Bothrops diporus)",
+		"nome_display": "Jararaca-Pintada",
 		"iucn_status": "LC",
-		"bioma": ["Cerrado", "Mata Atlântica", "Pampas"],
+		"bioma": ["Cerrado", "Mata Atlântica", "Pampa"],
 		"descricao": "Serpente peçonhenta da família Viperidae, encontrada em diversas regiões da América do Sul. Possui um padrão de manchas que a camufla no ambiente.",
 		"artes": [
-			{"path": "res://assets/normal/jararaca_pintada.jpg", "artist": "Artista Q", "is_alt": false}
 		],
 		"population": 100000,
 		"altura": { "min": 0.05, "max": 0.08, "unidade": "m", "archetype": "LOW" },
@@ -301,7 +298,6 @@ const DB = {
 		"bioma": ["Mata Atlântica", "Amazônia"],
 		"descricao": "Gênero de aranhas peçonhentas e agressivas, conhecidas pela postura de defesa com as pernas dianteiras erguidas. Sua picada pode ser perigosa.",
 		"artes": [
-			{"path": "res://assets/normal/armadeira.jpg", "artist": "Artista R", "is_alt": false}
 		],
 		"population": 500000,
 		"altura": { "min": 0.03, "max": 0.05, "unidade": "m", "archetype": "LOW" },
@@ -312,10 +308,9 @@ const DB = {
 	"ema": {
 		"nome_display": "Ema",
 		"iucn_status": "NT",
-		"bioma": ["Cerrado", "Pampas", "Caatinga"],
+		"bioma": ["Cerrado", "Pampa", "Caatinga"],
 		"descricao": "A maior ave brasileira, incapaz de voar, mas uma excelente corredora. O macho é responsável por chocar os ovos e cuidar dos filhotes.",
 		"artes": [
-			{"path": "res://assets/normal/ema.jpg", "artist": "Artista S", "is_alt": false}
 		],
 		"population": 70000,
 		"altura": { "min": 1.5, "max": 1.7, "unidade": "m", "archetype": "HIGH" },
@@ -326,10 +321,9 @@ const DB = {
 	"joao_pobre": {
 		"nome_display": "João-Pobre",
 		"iucn_status": "LC",
-		"bioma": ["Mata Atlântica", "Pampas", "Cerrado"],
+		"bioma": ["Mata Atlântica", "Pampa", "Cerrado"],
 		"descricao": "Pequeno pássaro insetívoro que habita margens de rios e lagos. É conhecido por seu canto simples e por balançar a cauda constantemente.",
 		"artes": [
-			{"path": "res://assets/normal/joao_pobre.jpg", "artist": "Artista T", "is_alt": false}
 		],
 		"population": 100000,
 		"altura": { "min": 0.1, "max": 0.12, "unidade": "m", "archetype": "LOW" },
@@ -340,12 +334,12 @@ const DB = {
 	"maguari": {
 		"nome_display": "Maguari",
 		"iucn_status": "LC",
-		"bioma": ["Pantanal", "Pampas"],
+		"bioma": ["Pantanal", "Pampa"],
 		"descricao": "Uma grande cegonha branca com cauda preta e uma área vermelha ao redor dos olhos. Alimenta-se em áreas alagadas, caçando peixes e anfíbios.",
 		"artes": [
 			{"path": "res://assets/normal/maguari.jpg", "artist": "Artista U", "is_alt": false}
 		],
-		"population": 10000,
+		"population": 1,
 		"altura": { "min": 0.9, "max": 1.1, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 0.9, "max": 1.1, "unidade": "m", "archetype": "HIGH" },
 		"velocidade": { "min": 40.0, "max": 50.0, "unidade": "km/h", "archetype": "HIGH" },
@@ -353,13 +347,11 @@ const DB = {
 	}
 }
 
-
 func _ready():
 	print("--- A verificar a biblioteca de backgrounds ---")
 	_scan_background_folder("res://assets/backgrounds")
 	print("Verificação de backgrounds concluída.")
 	print("DIAGNÓSTICO: Backgrounds Encontrados: ", background_cache)
-
 
 func _scan_background_folder(folder_path: String):
 	var dir = DirAccess.open(folder_path)
