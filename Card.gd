@@ -6,10 +6,10 @@ signal card_clicked(card_data)
 
 signal fully_drawn
 
+var iucn_status: String
 var bioma: String
 var unique_id: String
 var animal_id: String
-var iucn_status: String
 var altura: float
 var comprimento: float
 var velocidade: float

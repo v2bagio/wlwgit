@@ -1,13 +1,15 @@
-# ArtManager.gd (Com sistema de descoberta automática de arte)
+# ArtManager.gd (Com sistema de descoberta automática de arte melhorado)
 extends Node
 
 var art_library = {}
-signal scan_completed # Adicione esta linha no topo do script
+signal scan_completed
+
+# Extensões de imagem suportadas
+const SUPPORTED_EXTENSIONS = [".png", ".jpg", ".jpeg"]
 
 func _ready():
 	load_all_art()
-
-	scan_completed.emit() # Adicione esta linha no final da função
+	scan_completed.emit()
 	
 func load_all_art():
 	print("--- ArtManager: A iniciar descoberta automática de artes ---")
@@ -42,34 +44,131 @@ func _discover_player_art():
 			_scan_art_folder("%s%s/arts/alternate/" % [player_data_dir, player_id], artist_name, true)
 		player_id = dir.get_next()
 
-# --- FUNÇÃO DE DESCOBERTA CORRIGIDA E ROBUSTA ---
+# --- FUNÇÃO DE DESCOBERTA MELHORADA PARA MÚLTIPLOS TIPOS E SUFIXOS ---
 func _scan_art_folder(folder_path: String, artist_name: String, is_alt: bool):
 	var dir = DirAccess.open(folder_path)
-	if not dir: return
+	if not dir: 
+		print("ArtManager: Pasta não encontrada: %s" % folder_path)
+		return
 
 	var animal_ids = AnimalDatabase.get_animal_list()
 	
-	# CORREÇÃO: Ordena os IDs por comprimento, do mais longo para o mais curto.
-	# Isto garante que "onca_pintada" seja verificado antes de "onca".
+	# Ordena os IDs por comprimento, do mais longo para o mais curto
+	# Isto garante que "onca_pintada" seja verificado antes de "onca"
 	animal_ids.sort_custom(func(a, b): return a.length() > b.length())
 
 	dir.list_dir_begin()
 	var file_name = dir.get_next()
 	while file_name != "":
-		if not dir.current_is_dir() and (file_name.ends_with(".jpg") or file_name.ends_with(".png")):
-			for animal_id in animal_ids:
-				if file_name.begins_with(animal_id):
-					if not art_library.has(animal_id):
-						art_library[animal_id] = []
-					
-					art_library[animal_id].append({
-						"path": folder_path + file_name,
-						"artist": artist_name,
-						"is_alt": is_alt
-					})
-					# Encontrámos o "match" mais específico, podemos parar.
-					break
+		if not dir.current_is_dir():
+			var matched_animal = _match_file_to_animal(file_name, animal_ids)
+			if not matched_animal.is_empty():
+				if not art_library.has(matched_animal):
+					art_library[matched_animal] = []
+				
+				art_library[matched_animal].append({
+					"path": folder_path + file_name,
+					"artist": artist_name,
+					"is_alt": is_alt
+				})
+				print("ArtManager: Arte encontrada - %s -> %s (%s)" % [file_name, matched_animal, artist_name])
 		file_name = dir.get_next()
+
+func _match_file_to_animal(file_name: String, animal_ids: Array) -> String:
+	"""
+	Verifica se um arquivo corresponde a um animal, considerando:
+	- Múltiplas extensões (.png, .jpg, .jpeg)
+	- Sufixos numéricos (ex: lobo_guara1.png, lobo_guara2.jpg)
+	- Sufixos de versão (ex: lobo_guara_v2.png)
+	"""
+	
+	# Verificar se o arquivo tem uma extensão suportada
+	var has_supported_extension = false
+	for ext in SUPPORTED_EXTENSIONS:
+		if file_name.to_lower().ends_with(ext):
+			has_supported_extension = true
+			break
+	
+	if not has_supported_extension:
+		return ""
+	
+	# Remover a extensão para análise
+	var file_base = file_name.get_basename().to_lower()
+	
+	# Tentar fazer match com cada animal_id
+	for animal_id in animal_ids:
+		if _is_file_match_for_animal(file_base, animal_id):
+			return animal_id
+	
+	return ""
+
+func _is_file_match_for_animal(file_base: String, animal_id: String) -> bool:
+	"""
+	Verifica se um nome de arquivo (sem extensão) corresponde a um animal específico.
+	Considera padrões como:
+	- lobo_guara.png
+	- lobo_guara1.jpg
+	- lobo_guara2.jpeg
+	- lobo_guara_v2.png
+	- lobo_guara_alt.png
+	"""
+	
+	var animal_id_lower = animal_id.to_lower()
+	
+	# Caso 1: Match exato
+	if file_base == animal_id_lower:
+		return true
+	
+	# Caso 2: Arquivo começa com o animal_id
+	if file_base.begins_with(animal_id_lower):
+		# Obter o sufixo após o nome do animal
+		var suffix = file_base.substr(animal_id_lower.length())
+		
+		# Verificar se o sufixo é válido
+		return _is_valid_suffix(suffix)
+	
+	return false
+
+func _is_valid_suffix(suffix: String) -> bool:
+	"
+	Verifica se um sufixo é válido para variações de arte.
+	Sufixos válidos incluem:
+	- Números: 1, 2, 3, etc.
+	- Versões: _v1, _v2, _version2, etc.
+	- Alternativas: _alt, _alternate, _alternative
+	- Variações: _var, _variation
+	- Vazio (arquivo base)
+	"
+	
+	# Sufixo vazio é válido (arquivo base)
+	if suffix.is_empty():
+		return true
+	
+	# Remover underscores iniciais
+	suffix = suffix.lstrip("_")
+	
+	# Verificar se é apenas um número
+	if suffix.is_valid_int():
+		return true
+	
+	# Verificar padrões de versão
+	var version_patterns = [
+		"v", "version", "ver",
+		"alt", "alternate", "alternative",
+		"var", "variation", "variant"
+	]
+	
+	for pattern in version_patterns:
+		if suffix.begins_with(pattern):
+			var remaining = suffix.substr(pattern.length())
+			# Se não há nada após o padrão, é válido
+			if remaining.is_empty():
+				return true
+			# Se há um número após o padrão, é válido
+			if remaining.is_valid_int():
+				return true
+	
+	return false
 
 func _get_player_artist_name(player_id: String) -> String:
 	var info_path = "user://player_data/%s/artist_info.json" % player_id
@@ -84,7 +183,7 @@ func _get_player_artist_name(player_id: String) -> String:
 	
 	return "Artista da Comunidade"
 
-# --- FUNÇÕES PÚBLICAS (não mudam) ---
+# --- FUNÇÕES PÚBLICAS ---
 func get_random_art(animal_id: String, is_alt: bool) -> Dictionary:
 	if not art_library.has(animal_id):
 		printerr("ArtManager: Nenhuma arte encontrada para o animal '%s'." % animal_id)
@@ -93,7 +192,9 @@ func get_random_art(animal_id: String, is_alt: bool) -> Dictionary:
 	var possible_arts = art_library[animal_id].filter(func(art): return art.is_alt == is_alt)
 	
 	if not possible_arts.is_empty():
-		return possible_arts.pick_random()
+		var selected_art = possible_arts.pick_random()
+		print("ArtManager: Arte selecionada para %s (alt=%s): %s" % [animal_id, is_alt, selected_art.path])
+		return selected_art
 
 	var fallback_arts = art_library[animal_id].filter(func(art): return art.is_alt != is_alt)
 	if not fallback_arts.is_empty():
@@ -102,6 +203,20 @@ func get_random_art(animal_id: String, is_alt: bool) -> Dictionary:
 		
 	printerr("ArtManager: Nenhuma arte de nenhum tipo encontrada para '%s'." % animal_id)
 	return {"path": "", "artist": "Desconhecido"}
+
+func get_all_available_arts(animal_id: String) -> Array:
+	"""Retorna todas as artes disponíveis para um animal específico"""
+	if not art_library.has(animal_id):
+		return []
+	return art_library[animal_id]
+
+func get_art_count(animal_id: String, is_alt: bool = false) -> int:
+	"""Retorna o número de artes disponíveis para um animal"""
+	if not art_library.has(animal_id):
+		return 0
+	
+	var filtered_arts = art_library[animal_id].filter(func(art): return art.is_alt == is_alt)
+	return filtered_arts.size()
 
 func get_all_alt_art_animals() -> Array:
 	var alt_art_animals = []
@@ -162,3 +277,38 @@ func _extract_animal_id_from_path(path: String) -> String:
 			return id
 	
 	return ""
+
+# --- FUNÇÕES DE DIAGNÓSTICO ---
+func print_art_library():
+	"""Função de debug para imprimir toda a biblioteca de arte"""
+	print("=== BIBLIOTECA DE ARTE ===")
+	for animal_id in art_library.keys():
+		print("Animal: %s" % animal_id)
+		for art in art_library[animal_id]:
+			print("  - %s (Alt: %s) por %s" % [art.path, art.is_alt, art.artist])
+	print("=== FIM DA BIBLIOTECA ===")
+
+func get_library_stats() -> Dictionary:
+	"""Retorna estatísticas da biblioteca de arte"""
+	var stats = {
+		"total_animals": art_library.size(),
+		"total_arts": 0,
+		"normal_arts": 0,
+		"alt_arts": 0,
+		"animals_with_multiple_arts": 0
+	}
+	
+	for animal_id in art_library.keys():
+		var arts = art_library[animal_id]
+		stats.total_arts += arts.size()
+		
+		if arts.size() > 1:
+			stats.animals_with_multiple_arts += 1
+		
+		for art in arts:
+			if art.is_alt:
+				stats.alt_arts += 1
+			else:
+				stats.normal_arts += 1
+	
+	return stats
