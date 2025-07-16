@@ -19,7 +19,7 @@ func load_all_art():
 	#_discover_player_art()
 	
 	print("--- Descoberta de artes concluída. Biblioteca final: ---")
-	print(art_library)
+	print("ARTEEEEEEEEEEEEES", art_library)
 
 func _discover_base_art():
 	print("-> A procurar por artes base em res://assets...")

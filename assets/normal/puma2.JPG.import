@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://de6sl8wpncomb"
-path="res://.godot/imported/puma2.jpg-f3440f46d61d737055c8db03122edc25.ctex"
+path="res://.godot/imported/puma2.JPG-d88743bee002a90d0dd1e94ac2576096.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/puma2.jpg"
-dest_files=["res://.godot/imported/puma2.jpg-f3440f46d61d737055c8db03122edc25.ctex"]
+source_file="res://assets/normal/puma2.JPG"
+dest_files=["res://.godot/imported/puma2.JPG-d88743bee002a90d0dd1e94ac2576096.ctex"]
 
 [params]
 

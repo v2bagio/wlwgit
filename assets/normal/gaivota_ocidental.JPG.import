@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://bv0ccvviyf181"
-path="res://.godot/imported/gaivota_ocidental.jpg-cd192d056799baa4c93fa7f039e69e15.ctex"
+path="res://.godot/imported/gaivota_ocidental.JPG-6200903a1bf2a220917a1459478fd6b9.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/gaivota_ocidental.jpg"
-dest_files=["res://.godot/imported/gaivota_ocidental.jpg-cd192d056799baa4c93fa7f039e69e15.ctex"]
+source_file="res://assets/normal/gaivota_ocidental.JPG"
+dest_files=["res://.godot/imported/gaivota_ocidental.JPG-6200903a1bf2a220917a1459478fd6b9.ctex"]
 
 [params]
 

@@ -166,7 +166,8 @@ visible = false
 mesh = SubResource("BoxMesh_gkhit")
 
 [node name="CardMesh2" type="MeshInstance3D" parent="ViewportContainer/SubViewport"]
-transform = Transform3D(0.512, 0, 0, 0, 0.0113052, -0.764248, 0, 0.254749, 0.0339157, 0, 0, 0)
+transform = Transform3D(0.7, 0, 0, 0, 0.0113052, -0.764248, 0, 0.254749, 0.0339156, 0, 0, 0)
+rotation_order = 3
 mesh = SubResource("ArrayMesh_acarl")
 skeleton = NodePath("")
 
