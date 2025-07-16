@@ -25,7 +25,7 @@ const DB = {
 			{"path": "res://assets/normal/capivara.jpg", "artist": "Artista A", "is_alt": false},
 			{"path": "res://assets/normal/capivara_v2.jpg", "artist": "Artista B", "is_alt": false}
 		],
-		"population": 50000,
+		"population": 300000,
 		"altura":      { "min": 0.5, "max": 0.65, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 1.0, "max": 1.4,  "unidade": "m", "archetype": "HIGH" },
 		"velocidade":  { "min": 30.0,"max": 40.0, "unidade": "km/h", "archetype": "HIGH" },
@@ -65,7 +65,7 @@ const DB = {
 		"artes": [
 			{"path": "res://assets/normal/tucano.jpg", "artist": "Artista F", "is_alt": false}
 		],
-		"population": 50000,
+		"population": 150000,
 		"altura":      { "min": 0.45, "max": 0.55, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 0.5, "max": 0.65, "unidade": "m", "archetype": "HIGH" },
 		"velocidade":  { "min": 45.0, "max": 55.0, "unidade": "km/h", "archetype": "HIGH" },
@@ -121,7 +121,7 @@ const DB = {
 		"artes": [
 			{"path": "res://assets/normal/carcara.jpg", "artist": "Artista D", "is_alt": false}
 		],
-		"population": 500000,
+		"population": 200000,
 		"altura": { "min": 0.5, "max": 0.6, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 0.5, "max": 0.6, "unidade": "m", "archetype": "HIGH" },
 		"velocidade": { "min": 80.0, "max": 100.0, "unidade": "km/h", "archetype": "HIGH" },
@@ -177,7 +177,7 @@ const DB = {
 		"artes": [
 			{"path": "res://assets/normal/gaviao_caboclo.jpg", "artist": "Artista I", "is_alt": false}
 		],
-		"population": 2000000,
+		"population": 150000,
 		"altura": { "min": 0.45, "max": 0.58, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 0.45, "max": 0.58, "unidade": "m", "archetype": "HIGH" },
 		"velocidade": { "min": 70.0, "max": 90.0, "unidade": "km/h", "archetype": "HIGH" },
@@ -233,7 +233,7 @@ const DB = {
 		"artes": [
 			{"path": "res://assets/normal/sagui_tufo_preto.jpg", "artist": "Artista M", "is_alt": false}
 		],
-		"population": 200000,
+		"population": 150000,
 		"altura": { "min": 0.19, "max": 0.22, "unidade": "m", "archetype": "LOW" },
 		"comprimento": { "min": 0.28, "max": 0.33, "unidade": "m", "archetype": "LOW" },
 		"velocidade": { "min": 30.0, "max": 40.0, "unidade": "km/h", "archetype": "MEDIUM" },
@@ -299,7 +299,7 @@ const DB = {
 		"descricao": "Gênero de aranhas peçonhentas e agressivas, conhecidas pela postura de defesa com as pernas dianteiras erguidas. Sua picada pode ser perigosa.",
 		"artes": [
 		],
-		"population": 500000,
+		"population": 200000,
 		"altura": { "min": 0.03, "max": 0.05, "unidade": "m", "archetype": "LOW" },
 		"comprimento": { "min": 0.1, "max": 0.17, "unidade": "m", "archetype": "LOW" },
 		"velocidade": { "min": 3.0, "max": 4.0, "unidade": "km/h", "archetype": "LOW" },
@@ -339,7 +339,7 @@ const DB = {
 		"artes": [
 			{"path": "res://assets/normal/maguari.jpg", "artist": "Artista U", "is_alt": false}
 		],
-		"population": 10000,
+		"population": 100000,
 		"altura": { "min": 0.9, "max": 1.1, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 0.9, "max": 1.1, "unidade": "m", "archetype": "HIGH" },
 		"velocidade": { "min": 40.0, "max": 50.0, "unidade": "km/h", "archetype": "HIGH" },
