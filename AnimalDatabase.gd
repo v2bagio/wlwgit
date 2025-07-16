@@ -339,7 +339,7 @@ const DB = {
 		"artes": [
 			{"path": "res://assets/normal/maguari.jpg", "artist": "Artista U", "is_alt": false}
 		],
-		"population": 1,
+		"population": 10000,
 		"altura": { "min": 0.9, "max": 1.1, "unidade": "m", "archetype": "HIGH" },
 		"comprimento": { "min": 0.9, "max": 1.1, "unidade": "m", "archetype": "HIGH" },
 		"velocidade": { "min": 40.0, "max": 50.0, "unidade": "km/h", "archetype": "HIGH" },

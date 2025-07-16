@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dx5pw5b2bdsgq"
-path="res://.godot/imported/boa_constrictor.jpg-7bc663996aed18be541f5c7c193e810d.ctex"
+path="res://.godot/imported/boa_constrictor.JPG-b9732f1e00a4a2b89e3f551744b383be.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/boa_constrictor.jpg"
-dest_files=["res://.godot/imported/boa_constrictor.jpg-7bc663996aed18be541f5c7c193e810d.ctex"]
+source_file="res://assets/normal/boa_constrictor.JPG"
+dest_files=["res://.godot/imported/boa_constrictor.JPG-b9732f1e00a4a2b89e3f551744b383be.ctex"]
 
 [params]
 
