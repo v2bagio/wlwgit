@@ -1,4 +1,4 @@
-[gd_scene load_steps=10 format=3 uid="uid://b2hxa3rtgf8ax"]
+[gd_scene load_steps=11 format=3 uid="uid://b2hxa3rtgf8ax"]
 
 [ext_resource type="Script" uid="uid://ch17a6uw0t4eh" path="res://Card.gd" id="1_o8dmi"]
 
@@ -27,6 +27,17 @@ corner_radius_top_left = 3
 corner_radius_top_right = 3
 corner_radius_bottom_right = 3
 corner_radius_bottom_left = 3
+
+[sub_resource type="StyleBoxFlat" id="StyleBoxFlat_iiotd"]
+bg_color = Color(0.6, 0.6, 0.6, 0.686275)
+border_width_left = 2
+border_width_top = 2
+border_width_right = 2
+border_width_bottom = 2
+corner_radius_top_left = 4
+corner_radius_top_right = 4
+corner_radius_bottom_right = 4
+corner_radius_bottom_left = 4
 
 [sub_resource type="StyleBoxFlat" id="StyleBoxFlat_8ekg7"]
 border_blend = true
@@ -151,10 +162,14 @@ alignment = 1
 
 [node name="Controldown3" type="Control" parent="CardFace"]
 clip_contents = true
-custom_minimum_size = Vector2(0, 10)
+custom_minimum_size = Vector2(0, 15)
 layout_mode = 2
 
-[node name="NomeLabel" type="Label" parent="CardFace"]
+[node name="Borda" type="PanelContainer" parent="CardFace"]
+layout_mode = 2
+theme_override_styles/panel = SubResource("StyleBoxFlat_iiotd")
+
+[node name="NomeLabel" type="Label" parent="CardFace/Borda"]
 layout_mode = 2
 size_flags_vertical = 2
 horizontal_alignment = 1
@@ -251,10 +266,10 @@ layout_mode = 1
 anchors_preset = 1
 anchor_left = 1.0
 anchor_right = 1.0
-offset_left = -20.0
-offset_top = 5.0
-offset_right = -5.0
-offset_bottom = 20.0
+offset_left = -21.0
+offset_top = 7.0
+offset_right = -6.0
+offset_bottom = 22.0
 grow_horizontal = 0
 mouse_filter = 1
 theme_override_styles/panel = SubResource("StyleBoxFlat_3ujke")

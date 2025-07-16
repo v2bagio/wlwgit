@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://dcdd3s0u2fo1w"
-path="res://.godot/imported/cervo_do_pantanal.JPG-7e58a6bceaa68ff9bee3b5c13e197f7f.ctex"
+path="res://.godot/imported/cervo_do_pantanal.jpg-14467dc5c56ef5668bd93fe5c3c93c3f.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/cervo_do_pantanal.JPG"
-dest_files=["res://.godot/imported/cervo_do_pantanal.JPG-7e58a6bceaa68ff9bee3b5c13e197f7f.ctex"]
+source_file="res://assets/normal/cervo_do_pantanal.jpg"
+dest_files=["res://.godot/imported/cervo_do_pantanal.jpg-14467dc5c56ef5668bd93fe5c3c93c3f.ctex"]
 
 [params]
 

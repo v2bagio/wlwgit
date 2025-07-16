@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ckca6eiwc8634"
-path="res://.godot/imported/cyacare4.JPG-25f9b637fad94b95c69beb1387c8f483.ctex"
+path="res://.godot/imported/cyacare4.jpg-cfe448a91e542a625e55b3ff697a318d.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/cyacare4.JPG"
-dest_files=["res://.godot/imported/cyacare4.JPG-25f9b637fad94b95c69beb1387c8f483.ctex"]
+source_file="res://assets/normal/cyacare4.jpg"
+dest_files=["res://.godot/imported/cyacare4.jpg-cfe448a91e542a625e55b3ff697a318d.ctex"]
 
 [params]
 

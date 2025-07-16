@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://ghnya6giw8l0"
-path="res://.godot/imported/lobo_guara3.JPG-dd60a62f6836e9e66d987543903ea9a2.ctex"
+path="res://.godot/imported/lobo_guara3.jpg-ef500b6fee11c485e99189a82eee6297.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/lobo_guara3.JPG"
-dest_files=["res://.godot/imported/lobo_guara3.JPG-dd60a62f6836e9e66d987543903ea9a2.ctex"]
+source_file="res://assets/normal/lobo_guara3.jpg"
+dest_files=["res://.godot/imported/lobo_guara3.jpg-ef500b6fee11c485e99189a82eee6297.ctex"]
 
 [params]
 

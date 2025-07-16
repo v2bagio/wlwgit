@@ -6,10 +6,10 @@ signal card_clicked(card_data)
 
 signal fully_drawn
 
+var unique_id: String
 var animal_id: String
 var iucn_status: String
 var bioma: String
-var unique_id: String
 var altura: float
 var comprimento: float
 var velocidade: float
@@ -35,7 +35,7 @@ var is_locked = false
 @onready var rarity_gem = $RarityGem
 @onready var card_face = $CardFace
 @onready var card_back = $CardBack
-@onready var nome_label = $CardFace/NomeLabel
+@onready var nome_label = $CardFace/Borda/NomeLabel
 @onready var foto_frame = $CardFace/FotoFrame
 @onready var foto_animal = $CardFace/FotoFrame/FotoAnimal
 @onready var status_dot = $CardFace/FotoFrame/FotoAnimal/StatusDot

@@ -32,7 +32,7 @@ const DB = {
 		"peso":        { "min": 75.0,"max": 95.0, "unidade": "kg", "archetype": "HIGH" }
 	},
 	"onca_pintada": {
-		"nome_display": "Onça-Pintada", "iucn_status": "NT",
+		"nome_display": "Onça-pintada", "iucn_status": "NT",
 		"bioma": ["Pantanal", "Cerrado", "Mata Atlântica"],
 		"descricao": "O maior felino das Américas, a onça-pintada é um predador de topo com uma mordida poderosa. As suas manchas, chamadas rosetas, são únicas para cada indivíduo.",
 		"artes": [
@@ -59,7 +59,7 @@ const DB = {
 		"peso":        { "min": 0.4, "max": 0.6,  "unidade": "kg", "archetype": "LOW" }
 	},
 	"tucano": {
-		"nome_display": "Tucano-Toco", "iucn_status": "LC",
+		"nome_display": "Tucano-toco", "iucn_status": "LC",
 		"bioma": ["Pantanal", "Cerrado"],
 		"descricao": "Conhecido pelo seu enorme e colorido bico, o tucano-toco utiliza-o para alcançar frutos e regular a temperatura corporal.",
 		"artes": [
@@ -72,7 +72,7 @@ const DB = {
 		"peso":        { "min": 0.5, "max": 0.8, "unidade": "kg", "archetype": "LOW" }
 	},
 	"lobo_guara": {
-		"nome_display": "Lobo-Guará",
+		"nome_display": "Lobo-guará",
 		"iucn_status": "NT",
 		"bioma": ["Cerrado", "Pantanal", "Pampa"],
 		"descricao": "O maior canídeo da América do Sul, conhecido por suas pernas longas e finas e uma dieta onívora, com destaque para o 'fruto-do-lobo'.",
@@ -186,7 +186,7 @@ const DB = {
 	"gaivota_ocidental": {
 		"nome_display": "Gaivota-Ocidental",
 		"iucn_status": "LC",
-		"bioma": ["Costeiro"],
+		"bioma": ["Mata Atlântica"],
 		"descricao": "Uma grande gaivota encontrada na costa oeste da América do Norte. Não é nativa do Brasil, mas pode ser avistada ocasionalmente.",
 		"artes": [
 			{"path": "res://assets/normal/gaivota_ocidental.jpg", "artist": "Artista J", "is_alt": false}
@@ -226,7 +226,7 @@ const DB = {
 		"peso": { "min": 2.0, "max": 4.0, "unidade": "kg", "archetype": "LOW" }
 	},
 	"sagui_de_tufo_preto": {
-		"nome_display": "Sagui-de-Tufo-Preto",
+		"nome_display": "Sagui-de-tufo-preto",
 		"iucn_status": "LC",
 		"bioma": ["Cerrado", "Mata Atlântica"],
 		"descricao": "Pequeno primata com tufos de pelos pretos característicos nas orelhas. Vive em grupos familiares e se alimenta de insetos, frutos e seiva.",
@@ -293,7 +293,7 @@ const DB = {
 		"peso": { "min": 0.2, "max": 0.5, "unidade": "kg", "archetype": "LOW" }
 	},
 	"aranha_armadeira": {
-		"nome_display": "Aranha-Armadeira (Phoneutria)",
+		"nome_display": "Aranha-Armadeira",
 		"iucn_status": "NE",
 		"bioma": ["Mata Atlântica", "Amazônia"],
 		"descricao": "Gênero de aranhas peçonhentas e agressivas, conhecidas pela postura de defesa com as pernas dianteiras erguidas. Sua picada pode ser perigosa.",

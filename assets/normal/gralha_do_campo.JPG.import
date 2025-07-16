@@ -3,15 +3,15 @@
 importer="texture"
 type="CompressedTexture2D"
 uid="uid://c1o77xxrjlc66"
-path="res://.godot/imported/gralha_do_campo.JPG-072f107f357a1cdb9288e6a9966d2991.ctex"
+path="res://.godot/imported/gralha_do_campo.jpg-a9ae3c715d73afeedde4dabcda941035.ctex"
 metadata={
 "vram_texture": false
 }
 
 [deps]
 
-source_file="res://assets/normal/gralha_do_campo.JPG"
-dest_files=["res://.godot/imported/gralha_do_campo.JPG-072f107f357a1cdb9288e6a9966d2991.ctex"]
+source_file="res://assets/normal/gralha_do_campo.jpg"
+dest_files=["res://.godot/imported/gralha_do_campo.jpg-a9ae3c715d73afeedde4dabcda941035.ctex"]
 
 [params]
 
